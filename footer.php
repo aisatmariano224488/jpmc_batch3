@@ -88,38 +88,49 @@
             <hr class="border-gray-200 w-full my-4 md:hidden">
 
             <!-- RIGHT SECTINON -->
-            <div class="md:order-3 flex flex-col items-center text-center">
+            <div class="md:order-3 flex flex-col items-start text-left">
                 <!-- Contacts -->
                 <h3 class="text-lg font-bold mb-4 uppercase">Contact Us</h3>
                 <ul class="space-y-2 text-gray-400">
-                    <li class="flex items-center justify-center">
+                    <li class="flex items-center justify-start">
                         <i class="fas fa-map-marker-alt mr-3"></i>
-                        <address class="not-italic mb-0">016 Panapaan 2, Bacoor City, 4102, Cavite, Philippines</address>
+                        <address class="not-italic mb-0">
+                            016 Panapaan 2, Bacoor City, 4102, Cavite, Philippines
+                        </address>
                     </li>
-                    <li class="flex items-center justify-center">
+                    <li class="flex items-center justify-start">
                         <i class="fas fa-phone-alt mr-3"></i>
-                        <span>+63 (2) 852989785</span>
+                        <a href="tel:+63(2)852989785">+63 (2) 852989785</a>
                     </li>
-                    <li class="flex items-center justify-center flex-wrap">
+                    <li class="flex items-center justify-start flex-wrap">
                         <i class="fas fa-envelope mr-3"></i>
-                        <a href="mailto:jamespro_asia@yahoo.com" class="hover:text-white transition">jamespro_asia@yahoo.com</a>
+                        <a href="mailto:jamespro_asia@yahoo.com" class="hover:text-white transition">
+                            jamespro_asia@yahoo.com
+                        </a>
                     </li>
-                    <li class="flex items-center justify-center flex-wrap">
+                    <li class="flex items-center justify-start flex-wrap">
                         <i class="fas fa-envelope mr-3"></i>
-                        <a href="mailto:jamespro.asia101@gmail.com" class="hover:text-white transition">jamespro.asia101@gmail.com</a>
+                        <a href="mailto:jamespro.asia101@gmail.com" class="hover:text-white transition">
+                            jamespro.asia101@gmail.com
+                        </a>
                     </li>
                 </ul>
 
                 <!-- Find Us - James Polymers Mfg Corp -->
                 <h3 class="text-lg font-bold mt-8 mb-2 uppercase hidden md:block">Find Us</h3>
-                <p class="text-sm font-semibold text-gray-300 mb-4 hidden md:block">James Polymers Manufacturing Corporation</p>
-                <div class="flex space-x-4 hidden md:flex justify-center">
-                    <a href="https://www.facebook.com/JamesPolymersMfg.International" class="text-gray-400 hover:text-white transition text-xl" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <!-- <a href="#" class="text-gray-400 hover:text-white transition text-xl" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white transition text-xl" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white transition text-xl" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a> -->
+                <p class="text-sm font-semibold text-gray-300 mb-4 hidden md:block">
+                    James Polymers Manufacturing Corporation
+                </p>
+                <div class="flex space-x-4 hidden md:flex justify-start">
+                    <a href="https://www.facebook.com/JamesPolymersMfg.International"
+                    class="text-gray-400 hover:text-white transition text-xl"
+                    target="_blank" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <!-- Optional other social links -->
                 </div>
             </div>
+
 
         </div>
 

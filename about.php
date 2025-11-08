@@ -79,28 +79,35 @@ while ($section = $sections->fetch_assoc()) {
                 transition-opacity duration-500 ease-in-out " />
 
     <!-- HERO SECTION -->
-    <section
-        data-aos="fade-down"
-        class="relative bg-blue-400 h-96 flex items-center justify-center bg-cover bg-center"
-        style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://www.james-polymers.com/wp-content/uploads/2021/09/products-banner.jpg');">
-        <img
-            src="assets/img/banners/about_banner.jpg"
-            alt="Inclined Overlay"
-            class="absolute inset-0 w-full h-full object-cover"
-            style="mix-blend-mode: multiply; opacity: 1;">
-        <div class="hero-content">
-            <h1 class="text-4xl md:text-5xl font-bold mb-6">Innovating Polymer & Rubber Solutions Since 1980</h1>
-            <p class="text-xl md:text-2xl mb-8">Driving progress through advanced polymer technologies and sustainable manufacturing practices</p>
-            <div class="flex flex-wrap justify-center gap-4" data-aos="fade-up" data-aos-delay="400">
-                <a href="#our-story" class="bg-primary hover:bg-secondary text-white font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105 shadow-lg">
-                    Explore Our Story
-                </a>
-                <a href="contact.php" class="bg-transparent border-2 border-white text-white font-bold py-3 px-8 rounded-lg hover:bg-white hover:text-primary transition duration-300 transform hover:scale-105 shadow-lg">
-                    Contact Our Team
-                </a>
-            </div>
+<section
+    data-aos="fade-down"
+    class="relative bg-blue-400 h-[calc(100vh-100px)] flex items-center justify-center bg-cover bg-center mt-[0]"
+    style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://www.james-polymers.com/wp-content/uploads/2021/09/products-banner.jpg');">
+    
+    <img
+        src="assets/img/banners/about_banner.jpg"
+        alt="Inclined Overlay"
+        class="absolute inset-0 w-full h-full object-cover"
+        style="mix-blend-mode: multiply; opacity: 1;">
+    
+    <div class="hero-content text-center text-white z-10 px-4">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
+            Innovating Polymer & Rubber Solutions Since 1980
+        </h1>
+        <p class="text-xl md:text-2xl mb-8">
+            Driving progress through advanced polymer technologies and sustainable manufacturing practices
+        </p>
+        <div class="flex flex-wrap justify-center gap-4" data-aos="fade-up" data-aos-delay="400">
+            <a href="#our-story" class="bg-primary hover:bg-secondary text-white font-bold py-3 px-8 rounded-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                Explore Our Story
+            </a>
+            <a href="contact.php" class="bg-transparent border-2 border-white text-white font-bold py-3 px-8 rounded-lg hover:bg-white hover:text-primary transition duration-300 transform hover:scale-105 shadow-lg">
+                Contact Our Team
+            </a>
         </div>
-    </section>
+    </div>
+</section>
+
 
     <!-- COMPANY PROFILE -->
     <section id="our-story" class="section-modern" data-aos="fade-up">

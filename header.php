@@ -150,6 +150,17 @@
         }
     }
 
+    /* Custom breakpoint for very small screens */
+    @media (min-width: 320px) and (max-width: 374px) {
+        #mobile-menu h2 {
+            font-size: 1rem !important;
+        }
+        
+        #mobile-menu .text-xs {
+            font-size: 0.65rem !important;
+        }
+    }
+
     /* Mobile menu styles */
     #mobile-menu {
         height: 100vh;
@@ -380,6 +391,27 @@
         transform: translateX(-50px);
         transition: opacity 400ms ease, transform 400ms ease;
     }
+
+    /* Extra small devices */
+    @media (min-width: 375px) and (max-width: 479px) {
+        .logo-responsive {
+            height: 56px !important;
+            width: 56px !important;
+        }
+    }
+
+    /* Ensure mobile menu doesn't overflow */
+    #mobile-menu {
+        height: 100vh;
+        height: 100dvh; /* Dynamic viewport height for mobile browsers */
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #mobile-menu .p-4 {
+        min-height: 100vh;
+        min-height: 100dvh;
+    }
 </style>
 
 
@@ -519,20 +551,32 @@
 <!-- Small device Menu Button -->
 <div id="mobile-menu" class="xl:hidden fixed inset-0 bg-white z-50 transform -translate-x-full transition-transform duration-300 ease-in-out">
     <div class="p-4">
-        <div class="flex justify-between items-center mb-4">
-            <div class="logo flex items-center">
-                <img src="assets/img/header/logo.jpg" alt="James Polymers" class="logo-responsive w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-4 border-blue-500 shadow-lg">
-                <div class="ml-6">
-                    <span class="block text-4xl font-extrabold text-gray-900 animate-slide-in"><span class="jp-times text-red-600">J</span>AMES <span class="jp-times text-blue-600">P</span>OLYMERS</span>
-                    <span class="block text-xl font-bold text-blue-600 animate-fade-in">MANUFACTURING CORPORATION</span>
+        <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-200">
+            <!-- Logo and Company Name -->
+            <div class="flex items-center gap-3 flex-1 min-w-0">
+                <img src="assets/img/header/logowhitebgfinal.png" 
+                    alt="James Polymers" 
+                    class="w-14 h-14 xs:w-16 xs:h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-blue-500 shadow-lg flex-shrink-0">
+                <div class="custom-company-name text-lg sm:text-2xl md:text-4xl font-black text-gray-900 tracking-tight leading-tight" style="letter-spacing: -0.5px;">
+                    <span style="font-family: 'Times New Roman', serif;" class="text-blue-700 text-4xl sm:text-6xl md:text-6xl italic jp-letter">J</span>AMES
+                    <span style="font-family: 'Times New Roman', serif;" class="pe-1 text-red-600 text-4xl sm:text-6xl md:text-6xl italic jp-letter">P</span>OLYMERS
+                    <span class="custom-subtitle block text-xs sm:text-base md:text-xl font-semibold text-blue-600 mt-1" style="letter-spacing: 0.25px;">
+                        MANUFACTURING CORPORATION
+                    </span>
                 </div>
             </div>
-            <button id="close-menu-button" class="text-gray-800">
-                <i class="fas fa-times text-xl"></i>
+            
+            <!-- Fixed: Visible Close Button -->
+            <button id="close-menu-button" 
+                    class="text-gray-800 hover:text-red-600 transition-colors duration-200 p-2 rounded-lg hover:bg-gray-100 flex-shrink-0 ml-2"
+                    aria-label="Close menu">
+                <svg class="w-7 h-7 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
             </button>
         </div>
         <nav class="mt-4">
-            <ul class="space-y-6">
+            <ul class="space-y-3 sm:space-y-4">
                 <li><a href="index.php" class="block text-gray-800 hover:text-primary font-semibold uppercase text-base py-2">Home</a></li>
                 <li>
                     <a href="about.php" class="block text-gray-800 hover:text-primary font-semibold uppercase text-base py-2">About Us</a>
