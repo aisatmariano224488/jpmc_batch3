@@ -1,0 +1,27 @@
+# PHP settings for admin uploads - Set high limits
+<IfModule mod_php7.c>
+    php_value upload_max_filesize 2G
+    php_value post_max_size 2G
+    php_value max_execution_time 300
+    php_value max_input_time 300
+    php_value memory_limit 512M
+    php_value max_file_uploads 100
+</IfModule>
+
+<IfModule mod_php8.c>
+    php_value upload_max_filesize 2G
+    php_value post_max_size 2G
+    php_value max_execution_time 300
+    php_value max_input_time 300
+    php_value memory_limit 512M
+    php_value max_file_uploads 100
+</IfModule>
+
+# Alternative method using environment variables
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule .* - [E=PHP_UPLOAD_MAX_FILESIZE:2G]
+    RewriteRule .* - [E=PHP_POST_MAX_SIZE:2G]
+    RewriteRule .* - [E=PHP_MAX_EXECUTION_TIME:300]
+    RewriteRule .* - [E=PHP_MEMORY_LIMIT:512M]
+</IfModule> 

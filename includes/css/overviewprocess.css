@@ -1,0 +1,13 @@
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('<?php echo isset($config["main_bg"]) && $config["main_bg"] ? $config["main_bg"] : "images/sustainability/jpmclogo.png"; ?>') center center / contain no-repeat fixed;
+            opacity: 0.4;
+            z-index: -1;
+        }
+    

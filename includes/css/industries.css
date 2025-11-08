@@ -1,0 +1,298 @@
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.industry-card {
+    transition: transform 0.4s cubic-bezier(.4, 2, .3, 1), box-shadow 0.4s;
+    border-left: 4px solid #0066cc;
+}
+
+.industry-card:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(25, 118, 210, 0.25), 0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 20;
+}
+
+.benefit-card {
+    transition: transform 0.4s cubic-bezier(.4, 2, .3, 1), box-shadow 0.4s;
+}
+
+.benefit-card:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 25px 50px rgba(25, 118, 210, 0.35), 0 12px 24px rgba(0, 0, 0, 0.25), 0 6px 12px rgba(0, 0, 0, 0.15);
+    z-index: 20;
+}
+
+.page-banner {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://www.james-polymers.com/wp-content/uploads/2021/09/industries-banner.jpg');
+}
+
+.coming-soon::after {
+    content: "Coming Soon";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #0066cc;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 8px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.industries-carousel-container {
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.industries-carousel-track {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    cursor: grab;
+    user-select: none;
+}
+
+.industries-carousel-track:active {
+    cursor: grabbing;
+}
+
+.industries-carousel-slides {
+    display: flex;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    cursor: grab;
+}
+
+.industries-carousel-slides.dragging {
+    transition: none;
+    cursor: grabbing;
+}
+
+.industries-carousel-slides.momentum {
+    transition: none;
+}
+
+.industries-carousel-slides.free-scroll {
+    transition: none;
+}
+
+.industries-carousel-slide {
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.industries-carousel-slide.active {
+    transform: scale(1.02);
+}
+
+.industries-carousel-slide .industry-card {
+    pointer-events: auto;
+}
+
+.industries-carousel-nav {
+    position: relative;
+    z-index: 10;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.industries-carousel-nav:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.industries-carousel-nav:active {
+    transform: scale(0.95);
+}
+
+.industries-carousel-dot {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.industries-carousel-dot:hover {
+    transform: scale(1.2);
+    background-color: #0066cc;
+}
+
+.industries-carousel-dot.active {
+    background-color: #0066cc;
+    transform: scale(1.1);
+}
+
+.industries-carousel-counter {
+    font-weight: 600;
+    min-width: 60px;
+    text-align: center;
+}
+
+.industries-drag-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 102, 204, 0.9);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.industries-drag-indicator.show {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .industries-carousel-slide {
+        width: 100% !important;
+    }
+
+    .industries-carousel-controls {
+        display: grid;
+        grid-template-areas: 
+            "counter counter"
+            "prev dots next";
+        grid-template-columns: auto 1fr auto;
+        gap: 0.75rem;
+        align-items: center;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .industries-carousel-nav {
+        width: 3rem;
+        height: 3rem;
+        min-width: 3rem;
+    }
+
+    .industries-carousel-counter {
+        grid-area: counter;
+        text-align: center;
+        margin-bottom: 0;
+        font-size: 0.875rem;
+    }
+
+    .industries-carousel-nav.prev {
+        grid-area: prev;
+        justify-self: start;
+    }
+
+    .industries-carousel-nav.next {
+        grid-area: next;
+        justify-self: end;
+    }
+
+    .industries-carousel-dots {
+        grid-area: dots;
+        justify-self: center;
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        max-width: 100%;
+        gap: 0.25rem;
+    }
+
+    .industries-carousel-dot {
+        width: 0.75rem;
+        height: 0.75rem;
+        margin: 0 0.25rem;
+    }
+
+    /* Show only 5 dots on mobile */
+    .industries-carousel-dot:nth-child(n+6) {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .industries-carousel-controls {
+        grid-template-areas: 
+            "counter"
+            "dots"
+            "prev next";
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .industries-carousel-nav.prev,
+    .industries-carousel-nav.next {
+        justify-self: center;
+    }
+
+    .industries-carousel-nav.prev {
+        margin-right: 1rem;
+    }
+
+    .industries-carousel-nav.next {
+        margin-left: 1rem;
+    }
+
+    .industries-carousel-dots {
+        justify-self: center;
+        margin: 0.5rem 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        gap: 0.25rem;
+    }
+
+    /* Show only 5 dots on small mobile */
+    .industries-carousel-dot:nth-child(n+6) {
+        display: none;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .industries-carousel-slide {
+        width: 50% !important;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .industries-carousel-slide {
+        width: 33.333% !important;
+    }
+}
+
+@media (min-width: 1281px) {
+    .industries-carousel-slide {
+        width: 25% !important;
+    }
+}

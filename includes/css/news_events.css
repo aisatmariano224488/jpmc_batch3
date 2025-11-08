@@ -1,0 +1,886 @@
+body {
+    background-color: rgb(7, 73, 95);
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('<?php echo isset($config["main_bg"]) && $config["main_bg"] ? $config["main_bg"] : "images/sustainability/jpmclogo.png"; ?>') center center / contain no-repeat fixed;
+    opacity: 0.05;
+    z-index: -1;
+}
+
+
+.gradient-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.8s ease-out;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.slide-in-right {
+    animation: slideInRight 0.8s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.headline-article {
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.headline-article::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(20, 132, 192, 0.1), rgba(102, 126, 234, 0.1));
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.headline-section-bg {
+    background-color: rgb(0, 191, 255);
+    padding: 20px 0;
+}
+
+.headline-article:hover::before {
+    opacity: 0;
+}
+
+.headline-content {
+    position: relative;
+    z-index: 2;
+}
+
+.headline-badge {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.glass-effect {
+    background: rgba(190, 8, 8, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.news-card {
+    background: linear-gradient(145deg, #553d3d 0%, #164574 100%);
+    border: 1px solid rgba(91, 140, 204, 0.8);
+}
+
+.featured-overlay {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+.floating-badge {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.news-date {
+    color: white !important;
+}
+
+.banner-date {
+    color: white !important;
+}
+
+.banner-learn-more {
+    color: white !important;
+}
+
+.banner-learn-more::after {
+    background: white;
+}
+
+.title-underline-link {
+    position: relative;
+    display: inline-block;
+    transition: color 0.3s;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    max-width: 100%;
+}
+
+.title-underline-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    background: #1484c0;
+    transition: width 0.3s;
+}
+
+.title-underline-link:hover::after {
+    width: 100%;
+}
+
+.group:hover .title-underline-link::after,
+a:hover .title-underline-link::after {
+    width: 100%;
+}
+
+.filter-tab {
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    background: transparent;
+    color: #666;
+}
+
+.filter-tab.active {
+    background: #1484c0 !important;
+    color: white !important;
+    border-bottom-color: #1484c0;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(20, 132, 192, 0.3);
+}
+
+.filter-tab:hover {
+    color: #1484c0;
+    background: rgba(20, 132, 192, 0.1);
+}
+
+/* Content sections visibility */
+.news-content,
+.events-content,
+.videos-content,
+.plant-content {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.news-content[style*="display: none"],
+.events-content[style*="display: none"],
+.videos-content[style*="display: none"],
+.plant-content[style*="display: none"] {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.news-content[style*="display: block"],
+.news-content[style*="display: grid"],
+.events-content[style*="display: block"],
+.events-content[style*="display: grid"],
+.videos-content[style*="display: block"],
+.videos-content[style*="display: grid"],
+.plant-content[style*="display: block"],
+.plant-content[style*="display: grid"] {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.content-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-news {
+    background: #3b82f6;
+    color: white;
+}
+
+.badge-event {
+    background: #10b981;
+    color: white;
+}
+
+.badge-video {
+    background: #f59e0b;
+    color: white;
+}
+
+.badge-plant {
+    background: #8b5cf6;
+    color: white;
+}
+
+.load-more-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transition: all 0.3s ease;
+}
+
+.load-more-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Additional batch view enhancements */
+.batch-view-active {
+    background: linear-gradient(135deg, #1484c0 0%, #667eea 100%);
+    color: white;
+    border-color: #1484c0;
+}
+
+.batch-view-active:hover {
+    background: linear-gradient(135deg, #0f6b96 0%, #5a67d8 100%);
+}
+
+/* Batch content grid improvements */
+#batch-content {
+    min-height: 200px;
+}
+
+#batch-content.empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.05);
+    border-radius: 1rem;
+    border: 2px dashed rgba(20, 132, 192, 0.3);
+}
+
+/* Batch loading state */
+.batch-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    color: #1484c0;
+}
+
+.batch-loading i {
+    animation: spin 1s linear infinite;
+    margin-right: 0.5rem;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Enhanced Batch Filter Styles */
+.batch-filter-item {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.batch-filter-card {
+    min-width: 200px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.batch-filter-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%);
+}
+
+.batch-checkbox:checked + .batch-filter-card {
+    border-color: currentColor;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%);
+    transform: translateY(-2px) scale(1.05);
+}
+
+.batch-checkbox:checked + .batch-filter-card .batch-checkbox-indicator {
+    background-color: currentColor;
+    border-color: currentColor;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.batch-checkbox:checked + .batch-filter-card .batch-checkbox-indicator i {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.batch-checkbox-indicator {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.batch-checkbox-indicator i {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced batch content animation */
+.batch-content-item {
+    animation: slideInUp 0.6s ease-out;
+    animation-fill-mode: both;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Staggered animation for batch items */
+.batch-content-item:nth-child(1) { animation-delay: 0.1s; }
+.batch-content-item:nth-child(2) { animation-delay: 0.2s; }
+.batch-content-item:nth-child(3) { animation-delay: 0.3s; }
+.batch-content-item:nth-child(4) { animation-delay: 0.4s; }
+.batch-content-item:nth-child(5) { animation-delay: 0.5s; }
+.batch-content-item:nth-child(6) { animation-delay: 0.6s; }
+.batch-content-item:nth-child(n+7) { animation-delay: 0.7s; }
+
+/* Enhanced batch filter active state */
+.batch-filter-active {
+    background: linear-gradient(135deg, #1484c0 0%, #667eea 50%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 8px 25px rgba(20, 132, 192, 0.3);
+    transform: translateY(-2px);
+}
+
+.batch-filter-active:hover {
+    background: linear-gradient(135deg, #0f6b96 0%, #5a67d8 50%, #6b46c1 100%);
+    box-shadow: 0 12px 35px rgba(20, 132, 192, 0.4);
+    transform: translateY(-3px);
+}
+
+/* Enhanced Batch Group Header Styles */
+.batch-group-header {
+    animation: slideInDown 0.8s ease-out;
+    position: relative;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-40px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.batch-group-header .bg-gradient-to-r {
+    background: linear-gradient(135deg, #1484c0 0%, #667eea 50%, #764ba2 100%);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.batch-group-header .bg-gradient-to-r::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    animation: shimmer 4s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    50% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.batch-group-header:hover .bg-gradient-to-r::before {
+    animation-duration: 1.5s;
+}
+
+/* Progress bar animation */
+.batch-group-header .bg-white {
+    animation: progressFill 2s ease-out 0.5s both;
+}
+
+@keyframes progressFill {
+    from { width: 0%; }
+    to { width: 100%; }
+}
+
+/* Batch content item spacing */
+.batch-content-item {
+    margin-bottom: 1.5rem;
+}
+
+/* Enhanced batch grouped items */
+.batch-grouped-item {
+    animation: batchItemFadeIn 0.6s ease-out;
+    transform: translateY(0);
+    opacity: 1;
+}
+
+@keyframes batchItemFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Batch items container */
+.batch-items-container {
+    animation: containerSlideIn 0.8s ease-out;
+}
+
+@keyframes containerSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Batch number filter buttons */
+.batch-number-btn {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.batch-number-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(20, 132, 192, 0.2);
+}
+
+.batch-number-btn.active {
+    background: linear-gradient(135deg, #1484c0 0%, #667eea 100%);
+    color: white;
+    border-color: #1484c0;
+    box-shadow: 0 4px 15px rgba(20, 132, 192, 0.3);
+}
+
+.batch-number-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.batch-number-btn:hover::before {
+    left: 100%;
+}
+
+/* Enhanced batch filter section */
+#batch-filter-section {
+    animation: sectionSlideDown 0.6s ease-out;
+}
+
+@keyframes sectionSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Batch filter card enhancements */
+.batch-filter-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.batch-filter-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+}
+
+.batch-filter-card:hover::before {
+    transform: translateX(100%);
+}
+
+/* Batch checkbox indicator improvements */
+.batch-checkbox-indicator {
+    position: relative;
+    overflow: hidden;
+}
+
+.batch-checkbox-indicator::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+}
+
+.batch-checkbox:checked + .batch-filter-card .batch-checkbox-indicator::after {
+    width: 100%;
+    height: 100%;
+}
+
+/* Responsive adjustments for batch filter */
+@media (max-width: 768px) {
+    .batch-filter-card {
+        min-width: 150px;
+    }
+    
+    .batch-filter-item {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .batch-group-header h3 {
+        font-size: 1.5rem;
+    }
+    
+    .batch-group-header p {
+        font-size: 0.875rem;
+    }
+    
+    .batch-number-btn {
+        font-size: 0.75rem;
+        padding: 0.5rem 0.75rem;
+    }
+    
+    .batch-items-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .batch-filter-section .grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .batch-group-header .flex {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .batch-group-header .text-right {
+        text-align: center;
+    }
+}
+
+
+
+.floating-badge {
+
+    animation: float 3s ease-in-out infinite;
+
+}
+
+
+
+@keyframes float {
+
+
+
+    0%,
+
+    100% {
+
+        transform: translateY(0px);
+
+    }
+
+
+
+    50% {
+
+        transform: translateY(-10px);
+
+    }
+
+}
+
+
+
+.news-date {
+
+    color: white !important;
+
+}
+
+
+
+.banner-date {
+
+    color: white !important;
+
+}
+
+
+
+.banner-learn-more {
+
+    color: white !important;
+
+}
+
+
+
+.banner-learn-more::after {
+
+    background: white;
+
+}
+
+
+
+.title-underline-link {
+
+    position: relative;
+
+    display: inline-block;
+
+    transition: color 0.3s;
+
+    word-break: break-word;
+
+    overflow-wrap: break-word;
+
+    white-space: normal;
+
+    max-width: 100%;
+
+}
+
+
+
+.title-underline-link::after {
+
+    content: '';
+
+    position: absolute;
+
+    left: 0;
+
+    bottom: -4px;
+
+    width: 0;
+
+    height: 2px;
+
+    background: #1484c0;
+
+    transition: width 0.3s;
+
+}
+
+
+
+.title-underline-link:hover::after {
+
+    width: 100%;
+
+}
+
+
+
+.group:hover .title-underline-link::after,
+
+a:hover .title-underline-link::after {
+
+    width: 100%;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.content-badge {
+
+    position: absolute;
+
+    top: 12px;
+
+    left: 12px;
+
+    padding: 4px 8px;
+
+    border-radius: 12px;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+
+}
+
+
+
+.badge-news {
+
+    background: #3b82f6;
+
+    color: white;
+
+}
+
+
+
+.badge-event {
+
+    background: #10b981;
+
+    color: white;
+
+}
+
+
+
+.badge-video {
+
+    background: #f59e0b;
+
+    color: white;
+
+}
+
+
+
+.badge-plant {
+
+    background: #8b5cf6;
+
+    color: white;
+
+}
+
+
+
+.load-more-btn {
+
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+    transition: all 0.3s ease;
+
+}
+
+
+
+.load-more-btn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+
+}
+
+
+
+.line-clamp-3 {
+
+    display: -webkit-box;
+
+    line-clamp: 3;
+
+    -webkit-line-clamp: 3;
+
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+
+}

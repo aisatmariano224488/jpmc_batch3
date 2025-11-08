@@ -1,0 +1,48 @@
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .product-card,
+        .service-card {
+            transition: transform 0.4s cubic-bezier(.4, 2, .3, 1), box-shadow 0.4s;
+        }
+
+        .product-card:hover,
+        .service-card:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(25, 118, 210, 0.25), 0 8px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 20;
+        }
+
+        .page-banner {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://www.james-polymers.com/wp-content/uploads/2021/09/products-banner.jpg');
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: auto;
+            padding: 24px;
+            width: 95%;
+            max-width: 1200px;
+            border-radius: 12px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }

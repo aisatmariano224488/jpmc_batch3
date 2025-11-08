@@ -1,0 +1,556 @@
+ .dropdown:hover .dropdown-menu {
+     display: block;
+ }
+
+ .job-card {
+     transition: all 0.3s ease;
+ }
+
+ .job-card:hover {
+     transform: translateY(-5px);
+     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+ }
+
+ .nav-tabs .nav-link.active {
+     color: #0066cc;
+     border-bottom: 3px solid #0066cc;
+     background: transparent;
+ }
+
+ .nav-tabs .nav-link {
+     color: #666;
+     border: none;
+     padding: 1rem 2rem;
+     font-weight: 500;
+ }
+
+ .modal-step {
+     display: none;
+ }
+
+ .modal-step.active {
+     display: block;
+ }
+
+ body {
+     position: relative;
+     background-color: #ffffff !important;
+ }
+
+ .hero-content {
+     position: relative;
+     z-index: 10;
+ }
+
+ .floating-shapes .shape {
+     position: absolute;
+     background-color: rgba(255, 255, 255, 0.1);
+     border-radius: 50%;
+ }
+
+ .shape-1 {
+     width: 100px;
+     height: 100px;
+     top: 10%;
+     left: 10%;
+ }
+
+ .shape-2 {
+     width: 150px;
+     height: 150px;
+     bottom: 10%;
+     right: 10%;
+ }
+
+ .animate-float {
+     animation: float 8s ease-in-out infinite;
+ }
+
+ .animate-delay-1 {
+     animation-delay: 2s;
+ }
+
+ @keyframes float {
+     0% {
+         transform: translateY(0px);
+     }
+
+     50% {
+         transform: translateY(-20px);
+     }
+
+     100% {
+         transform: translateY(0px);
+     }
+ }
+
+ .section-modern {
+     padding: 6rem 0;
+ }
+
+ .section-title {
+     font-size: 2.5rem;
+     font-weight: 700;
+     margin-bottom: 1rem;
+     color: #222222;
+ }
+
+ .section-subtitle {
+     font-size: 1.2rem;
+     color: #666;
+     max-width: 700px;
+     margin: 0 auto;
+ }
+
+ .card-modern {
+     border-radius: 1rem;
+     overflow: hidden;
+     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+ }
+
+ .value-icon {
+     width: 60px;
+     height: 60px;
+     border-radius: 12px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     color: white;
+     font-size: 1.5rem;
+ }
+
+ .bg-accent {
+     background-color: #ff9500;
+ }
+
+ .text-accent {
+     color: #ff9500;
+ }
+
+ .btn-modern {
+     padding: 0.75rem 2rem;
+     border-radius: 0.5rem;
+     font-weight: 600;
+     transition: all 0.3s;
+ }
+
+ .btn-primary {
+     background-color: white;
+     color: #0066cc;
+ }
+
+ .btn-primary:hover {
+     background-color: #004d99;
+     transform: translateY(-2px);
+ }
+
+ .btn-secondary {
+     background-color: #f5f5f5;
+     color: #333;
+ }
+
+ .btn-outline-white {
+     background-color: transparent;
+     color: white;
+     border: 2px solid white;
+ }
+
+ .btn-outline-white:hover {
+     background-color: white;
+     color: #0066cc;
+ }
+
+ .testimonial-card {
+     border-radius: 1rem;
+     overflow: hidden;
+     padding: 2rem;
+     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+     background-color: white;
+     position: relative;
+ }
+
+ .testimonial-card::before {
+     content: '"';
+     position: absolute;
+     top: 1rem;
+     left: 2rem;
+     font-size: 5rem;
+     color: rgba(0, 102, 204, 0.1);
+     font-family: Georgia, serif;
+     line-height: 1;
+ }
+
+ .benefit-card {
+     padding: 2rem;
+     border-radius: 1rem;
+     background-color: white;
+     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+     height: 100%;
+     transition: all 0.3s;
+ }
+
+ .benefit-card:hover {
+     transform: translateY(-5px);
+     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+ }
+
+ .benefit-icon {
+     font-size: 2.5rem;
+     margin-bottom: 1.5rem;
+     color: #0066cc;
+ }
+
+ .nav-tabs .nav-link.active {
+     color: #0066cc;
+     border-bottom: 3px solid #0066cc;
+     background: transparent;
+ }
+
+ .nav-tabs .nav-link {
+     color: #666;
+     border: none;
+     padding: 1rem 2rem;
+     font-weight: 500;
+ }
+
+ .modal-step {
+     display: none;
+ }
+
+ .modal-step.active {
+     display: block;
+ }
+
+ .modal-content {
+     border: none;
+     border-radius: 1rem;
+     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+ }
+
+ .modal-header {
+     background: linear-gradient(135deg, #0066cc 0%, #004d99 100%);
+     color: white;
+     border-top-left-radius: 1rem;
+     border-top-right-radius: 1rem;
+     padding: 1.5rem;
+ }
+
+ .modal-body {
+     padding: 2rem;
+ }
+
+ .step-indicator {
+     position: relative;
+     text-align: center;
+     z-index: 1;
+ }
+
+ .step-indicator::before {
+     content: '';
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     width: 100%;
+     height: 2px;
+     background-color: #e5e7eb;
+     transform: translate(-50%, -50%);
+     z-index: -1;
+ }
+
+ .step-indicator.active .step-circle {
+     background-color: #0066cc;
+     color: white;
+ }
+
+ .step-circle {
+     width: 2rem;
+     height: 2rem;
+     border-radius: 50%;
+     background-color: #e5e7eb;
+     color: #6b7280;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     margin: 0 auto 0.5rem;
+     font-weight: 600;
+ }
+
+ .form-section {
+     background-color: white;
+     border-radius: 0.75rem;
+     padding: 1.5rem;
+     margin-bottom: 1.5rem;
+     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+ }
+
+ .form-section h4 {
+     color: #1f2937;
+     font-size: 1.25rem;
+     font-weight: 600;
+     margin-bottom: 1rem;
+ }
+
+ .form-control {
+     width: 100%;
+     padding: 0.75rem 1rem;
+     border: 1px solid #e5e7eb;
+     border-radius: 0.5rem;
+     transition: all 0.2s;
+ }
+
+ .form-control:focus {
+     border-color: #0066cc;
+     box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+     outline: none;
+ }
+
+ .file-upload {
+     border: 2px dashed #e5e7eb;
+     border-radius: 0.75rem;
+     padding: 2rem;
+     text-align: center;
+     cursor: pointer;
+     transition: all 0.2s;
+ }
+
+ .file-upload:hover {
+     border-color: #0066cc;
+     background-color: rgba(0, 102, 204, 0.05);
+ }
+
+ .btn-modern {
+     padding: 0.75rem 2rem;
+     border-radius: 0.5rem;
+     font-weight: 600;
+     transition: all 0.3s;
+ }
+
+ .btn-modern:hover {
+     transform: translateY(-1px);
+ }
+
+ .btn-primary {
+     background-color: white;
+     color: #004d99;
+ }
+
+ .btn-primary:hover {
+     background-color: #f3f4f6;
+ }
+
+ .btn-secondary {
+     background-color: #f3f4f6;
+     color: #4b5563;
+ }
+
+ .btn-secondary:hover {
+     background-color: #e5e7eb;
+ }
+
+ .gallery-filter-btn {
+     padding: 0.75rem 1.5rem;
+     border-radius: 2rem;
+     border: 2px solid #e5e7eb;
+     background-color: white;
+     color: #6b7280;
+     font-weight: 600;
+     transition: all 0.3s;
+     cursor: pointer;
+ }
+
+ .gallery-filter-btn:hover {
+     border-color: #0066cc;
+     color: #0066cc;
+     transform: translateY(-1px);
+ }
+
+ .gallery-filter-btn.active {
+     background-color: #0066cc;
+     border-color: #0066cc;
+     color: white;
+ }
+
+ .gallery-card {
+     background-color: white;
+     border-radius: 1rem;
+     overflow: hidden;
+     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+     transition: all 0.3s;
+     height: 100%;
+ }
+
+ .gallery-card:hover {
+     transform: translateY(-5px);
+     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+ }
+
+ .gallery-media {
+     position: relative;
+     overflow: hidden;
+     height: 240px;
+ }
+
+ .gallery-image {
+     width: 100%;
+     height: 100%;
+     object-fit: cover;
+     transition: transform 0.3s;
+ }
+
+ .gallery-card:hover .gallery-image {
+     transform: scale(1.05);
+ }
+
+ .gallery-overlay {
+     position: absolute;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     background: linear-gradient(135deg, rgba(0, 102, 204, 0.8) 0%, rgba(0, 77, 153, 0.8) 100%);
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     opacity: 0;
+     transition: all 0.3s;
+ }
+
+ .gallery-card:hover .gallery-overlay {
+     opacity: 1;
+ }
+
+ .gallery-view-btn {
+     background-color: white;
+     color: #0066cc;
+     border: none;
+     border-radius: 50%;
+     width: 60px;
+     height: 60px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     font-size: 1.5rem;
+     transition: all 0.3s;
+     cursor: pointer;
+ }
+
+ .gallery-view-btn:hover {
+     transform: scale(1.1);
+     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+ }
+
+ .gallery-type-badge {
+     position: absolute;
+     top: 1rem;
+     right: 1rem;
+     background-color: rgba(0, 0, 0, 0.7);
+     color: white;
+     padding: 0.5rem;
+     border-radius: 0.5rem;
+     font-size: 0.875rem;
+ }
+
+ .gallery-type-badge.video {
+     background-color: rgba(255, 149, 0, 0.9);
+ }
+
+ .gallery-type-badge.testimonial {
+     background-color: rgba(16, 185, 129, 0.9);
+ }
+
+ .gallery-info {
+     padding: 1.5rem;
+ }
+
+ .gallery-info h4 {
+     font-size: 1.125rem;
+     font-weight: 700;
+     color: #1f2937;
+     margin-bottom: 0.5rem;
+ }
+
+ .gallery-info p {
+     color: #6b7280;
+     font-size: 0.875rem;
+ }
+
+ .gallery-item {
+     transition: all 0.3s;
+ }
+
+ .gallery-item.hidden {
+     opacity: 0;
+     transform: scale(0.8);
+     pointer-events: none;
+ }
+
+ .gallery-modal-content {
+     border: none;
+     border-radius: 1rem;
+     overflow: hidden;
+ }
+
+ .gallery-modal-header {
+     background: linear-gradient(135deg, #0066cc 0%, #004d99 100%);
+     color: white;
+     border: none;
+ }
+
+ .gallery-modal-media {
+     position: relative;
+     max-height: 70vh;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     background-color: #000;
+ }
+
+ .gallery-modal-media img {
+     max-width: 100%;
+     max-height: 70vh;
+     object-fit: contain;
+ }
+
+ .gallery-modal-media video {
+     max-width: 100%;
+     max-height: 70vh;
+     object-fit: contain;
+ }
+
+ .gallery-modal-info {
+     background-color: #f9fafb;
+ }
+
+ .gallery-modal-info h4 {
+     font-size: 1.25rem;
+     font-weight: 700;
+     color: #1f2937;
+     margin-bottom: 0.5rem;
+ }
+
+ .gallery-loading {
+     display: inline-block;
+     width: 20px;
+     height: 20px;
+     border: 3px solid rgba(0, 102, 204, 0.3);
+     border-radius: 50%;
+     border-top-color: #0066cc;
+     animation: spin 1s ease-in-out infinite;
+ }
+
+ @keyframes spin {
+     to {
+         transform: rotate(360deg);
+     }
+ }
+
+ .gallery-filter-btn.active {
+     background-color: #0066cc;
+     border-color: #0066cc;
+     color: #fff;
+     box-shadow: 0 4px 16px rgba(0, 102, 204, 0.15);
+     transform: scale(1.08);
+     z-index: 1;
+     position: relative;
+     transition: all 0.2s;
+ }
