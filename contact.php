@@ -7,6 +7,7 @@
     <title>Contact Us | James Polymers - High Performance Polymer Solutions</title>
 
     <link rel="icon" type="image/png" href="assets/img/tab_icon.png">
+    
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -225,6 +226,8 @@
     ini_set('log_errors', 1);
     ini_set('error_log', __DIR__ . '/error_log.txt');
 
+    
+
     set_exception_handler(function ($e) {
         error_log("Uncaught Exception: " . $e->getMessage() . "\n" . $e->getTraceAsString());
         echo '<div style="color:red">A server error occurred. Please try again later.</div>';
@@ -237,7 +240,7 @@
     }
 
     // Include header
-    // include 'header.php'; // Commented out as files are not provided
+    include 'header.php'; // Commented out as files are not provided
 
     $page = 'contact';
     $form_success = false;
@@ -249,7 +252,7 @@
 
     <section
         data-aos="fade-down"
-        class="relative bg-blue-400 h-96 flex items-center justify-center bg-cover bg-center drop-shadow-2xl animate__animated animate__fadeIn mt-[14vh]"
+        class="relative bg-blue-400 h-96 flex items-center justify-center bg-cover bg-center drop-shadow-2xl animate__animated animate__fadeIn"
         style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('<?php echo getContent($page, 'banner', 'background_image', 'https://www.james-polymers.com/wp-content/uploads/2021/09/contact-banner.jpg'); ?>')">
         <img
             src="assets/img/banners/contact_banner.jpg"
@@ -368,8 +371,8 @@
     </section>
     
     <?php // include 'chatbot.php'; ?>
-
-    <?php // include 'footer.php'; ?>
+    
+    <?php  include 'footer.php'; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
