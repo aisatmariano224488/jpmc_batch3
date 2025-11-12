@@ -50,11 +50,11 @@
   <!-- Input -->
   <div class="p-2 sm:p-3 border-t border-gray-200">
     <div class="flex space-x-2">
-      <input id="chat-input" type="text" placeholder="Type your question..." class="flex-1 px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:border-blue-500" />
+      <!-- <input id="chat-input" type="text" placeholder="Type your question..." class="flex-1 px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-xs sm:text-sm focus:outline-none focus:border-blue-500" />
       <button id="chat-send" class="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm transition-all bg-gray-200 text-gray-400 cursor-not-allowed" disabled>
         <span class="hidden sm:inline">Send</span>
         <i class="fas fa-paper-plane sm:hidden"></i>
-      </button>
+      </button> -->
     </div>
   </div>
 </div>
@@ -146,6 +146,19 @@
                 question: 'How long has JPMC been in business?',
                 answer: 'JPMC has been in business since 1980, providing over 45 years of experience in polymer manufacturing.',
                 keywords: ['experience', 'years', 'history', 'business']
+            }
+        ],
+
+        'Contact & Facilities': [
+            {
+                question: 'What are your office hours?',
+                answer: 'Our office hours are Monday to Friday, 8:00 AM to 5:00 PM (Philippine Time). We are closed on weekends and public holidays. For urgent inquiries outside office hours, please email us at jamespro_asia@yahoo.com and we will respond on the next business day.',
+                keywords: ['office hours', 'working hours', 'business hours', 'open', 'schedule', 'time']
+            },
+            {
+                question: 'Do you provide parking?',
+                answer: 'Yes, we provide parking facilities for visitors at our Bacoor City location. Please inform us in advance of your visit so we can arrange parking space for you. For directions and parking instructions, contact us at +63(2) 852989785.',
+                keywords: ['parking', 'visitor parking', 'parking space', 'park', 'vehicle']
             }
         ],
 
@@ -352,10 +365,11 @@
     function showMainCategories() {
       quickQuestions = [
         { text: '📚 General Information', type: 'category', category: 'General Information' },
+        { text: '📍 Contact & Facilities', type: 'category', category: 'Contact & Facilities' },
         { text: '🔧 Technical Details', type: 'category', category: 'Technical Details' },
         { text: '✅ Quality & Standards', type: 'category', category: 'Quality & Standards' },
         { text: '🔍 Process Optimization', type: 'category', category: 'Process Optimization' },
-        { text: '⚠️ Troubleshooting', type: 'category', category: 'Troubleshooting' }
+        { text: '⚠️ Troubleshooting', type: 'category', category: 'Troubleshooting' },
       ];
       renderQuickQuestions();
     }
@@ -540,7 +554,8 @@
       conversationHistory = [];
       conversationLevel = 1;
       messages = [];
-      initializeChatbot();
+      renderMessages(); // Clear the display first
+      initializeChatbot(); // Then reinitialize with welcome messages
     }
 
     function updateUnreadBadge() {
@@ -590,27 +605,32 @@
       toggleChatbot();
     });
 
-    sendBtn.addEventListener('click', () => {
-      sendMessage();
-    });
-
-    chatInput.addEventListener('input', () => {
-      const trimmed = chatInput.value.trim();
-      if (trimmed) {
-        sendBtn.disabled = false;
-        sendBtn.className = sendBtn.className.replace('bg-gray-200 text-gray-400 cursor-not-allowed', 'bg-blue-600 text-white hover:bg-blue-700');
-      } else {
-        sendBtn.disabled = true;
-        sendBtn.className = sendBtn.className.replace('bg-blue-600 text-white hover:bg-blue-700', 'bg-gray-200 text-gray-400 cursor-not-allowed');
-      }
-    });
-
-    chatInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
+    // Only add event listeners if the elements exist
+    if (sendBtn) {
+      sendBtn.addEventListener('click', () => {
         sendMessage();
-      }
-    });
+      });
+    }
+
+    if (chatInput) {
+      chatInput.addEventListener('input', () => {
+        const trimmed = chatInput.value.trim();
+        if (trimmed) {
+          sendBtn.disabled = false;
+          sendBtn.className = sendBtn.className.replace('bg-gray-200 text-gray-400 cursor-not-allowed', 'bg-blue-600 text-white hover:bg-blue-700');
+        } else {
+          sendBtn.disabled = true;
+          sendBtn.className = sendBtn.className.replace('bg-blue-600 text-white hover:bg-blue-700', 'bg-gray-200 text-gray-400 cursor-not-allowed');
+        }
+      });
+
+      chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          sendMessage();
+        }
+      });
+    }
 
     exportBtn.addEventListener('click', exportChat);
     newChatBtn.addEventListener('click', startNewConversation);
