@@ -158,7 +158,7 @@ usort($all_content, function ($a, $b) {
 
     <!-- Headline Article Section -->
     <?php if ($headline_article): ?>
-        <section class="relative z-10 py-16 bg-white">
+        <section class="relative py-16 bg-white">
             <div class="container mx-auto px-6">
                 <div class="mb-12 text-center">
                     <h2 class="text-4xl font-bold mb-4" style="color: #1484c0;">Latest Headlines</h2>
