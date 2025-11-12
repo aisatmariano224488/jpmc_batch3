@@ -240,7 +240,8 @@
     }
 
     // Include header
-    include 'header.php'; // Commented out as files are not provided
+    include 'header.php';
+    include 'chatbot.php';
 
     $page = 'contact';
     $form_success = false;

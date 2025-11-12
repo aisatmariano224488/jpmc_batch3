@@ -74,9 +74,6 @@ $conn->close();
 <body class="bg-gray-100">
     <?php include 'header.php'; ?>
 
-    <!-- Chatbot Script -->
-    <?php include 'chatbot.php'; ?>
-
     <img id="floatingLogo" src="assets/img/JP_BG_WATERMARK_CIRCLE.png" alt="JP Watermark"
         class="fixed inset-0 w-full h-full object-cover opacity-20 pointer-events-none select-none transition-opacity duration-500 ease-in-out" />
 
@@ -173,6 +170,9 @@ $conn->close();
 
     <!-- JavaScript -->
     <script src="includes/javascript/overviewprocess.js"></script>
+    
+    <!-- Chatbot Script -->
+    <?php include 'chatbot.php'; ?>
 
     <!-- Footer -->
     <?php include 'footer.php'; ?>

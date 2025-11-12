@@ -131,9 +131,6 @@ usort($all_content, function ($a, $b) {
 <body class="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
     <?php include 'header.php'; ?>
 
-    <!-- Chatbot Script -->
-    <?php include 'chatbot.php'; ?>
-
     <!-- Hero Section -->
     <section
         data-aos="fade-down"
@@ -653,9 +650,11 @@ usort($all_content, function ($a, $b) {
             }, 100);
         });
     </script>
+    
 
     <!-- Footer -->
     <?php include 'footer.php'; ?>
+    <?php include 'chatbot.php'; ?>
 </body>
 
 </html>

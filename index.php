@@ -576,12 +576,6 @@ $canonicalUrl = 'https://jamespolymers.com/';
         }
     });
 
-    // Service Worker Registration for PWA (optional)
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/sw.js');
-        });
-    }
     </script>
 
 </body>
