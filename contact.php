@@ -277,7 +277,6 @@
             <div class="contact-card"> 
                 
                 <h1 class="page-title">Contact Us</h1>
-                <h2 class="section-title">Get in Touch</h2>
                 
                 <div class="contact-details-grid"> 
                     
