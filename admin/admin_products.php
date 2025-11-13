@@ -200,11 +200,19 @@ $conn->close();
     <style>
         .admin-content {
             transition: margin-left 0.3s ease;
+            padding: 1rem;
+        }
+        
+        @media (min-width: 768px) {
+            .admin-content {
+                padding: 1.5rem;
+            }
         }
         
         @media (min-width: 1024px) {
             .admin-content {
-                margin-left: 16rem; /* w-64 = 16rem */
+                margin-left: 16rem;
+                padding: 2rem;
             }
         }
     </style>
@@ -216,18 +224,18 @@ $conn->close();
     <!-- Main Content -->
     <div class="admin-content p-4 sm:p-6 lg:p-8">
         <!-- Admin Header -->
-        <div class="flex justify-between items-center mb-6">
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
             <div>
-                <h1 class="text-2xl font-bold text-gray-800">Manage Products</h1>
-                <p class="text-gray-600">Add, edit or delete products</p>
+                <h1 class="text-xl sm:text-2xl font-bold text-gray-800">Manage Products</h1>
+                <p class="text-sm sm:text-base text-gray-600">Add, edit or delete products</p>
             </div>
-            <div>
+            <div class="w-full sm:w-auto">
                 <?php if ($action != "new" && $action != "edit"): ?>
-                <a href="admin_products.php?action=new" class="bg-primary hover:bg-secondary text-white py-2 px-4 rounded-lg transition-all flex items-center">
+                <a href="admin_products.php?action=new" class="bg-primary hover:bg-secondary text-white py-2 px-4 rounded-lg transition-all flex items-center justify-center w-full sm:w-auto">
                     <i class="fas fa-plus mr-2"></i> Add New Product
                 </a>
                 <?php else: ?>
-                <a href="admin_products.php" class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-lg transition-all flex items-center">
+                <a href="admin_products.php" class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-lg transition-all flex items-center justify-center w-full sm:w-auto">
                     <i class="fas fa-arrow-left mr-2"></i> Back to Products
                 </a>
                 <?php endif; ?>
@@ -292,7 +300,7 @@ $conn->close();
                     
                     <?php if (!empty($product_image) && $action == "edit"): ?>
                     <div class="mb-3 flex items-center">
-                        <img src="<?php echo htmlspecialchars($product_image); ?>" alt="Current product image" class="h-20 w-auto border rounded-md">
+                        <img src="../<?php echo htmlspecialchars($product_image); ?>" alt="Current product image" class="h-20 w-auto border rounded-md">
                         <span class="ml-3 text-sm text-gray-600">Current Image</span>
                     </div>
                     <?php endif; ?>
@@ -305,11 +313,11 @@ $conn->close();
                     </p>
                 </div>
                 
-                <div class="flex items-center justify-end">
-                    <button type="button" onclick="window.location.href='admin_products.php'" class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-lg mr-4 transition-all">
+                <div class="flex flex-col sm:flex-row items-center justify-end gap-3">
+                    <button type="button" onclick="window.location.href='admin_products.php'" class="w-full sm:w-auto bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-lg transition-all">
                         Cancel
                     </button>
-                    <button type="submit" class="bg-primary hover:bg-secondary text-white py-2 px-6 rounded-lg transition-all">
+                    <button type="submit" class="w-full sm:w-auto bg-primary hover:bg-secondary text-white py-2 px-6 rounded-lg transition-all">
                         <?php echo $action == "new" ? "Add Product" : "Update Product"; ?>
                     </button>
                 </div>
@@ -318,7 +326,63 @@ $conn->close();
         <?php else: ?>
         <!-- Products Table -->
         <div class="bg-white rounded-lg shadow overflow-hidden">
-            <div class="overflow-x-auto">
+            <!-- Mobile Card View -->
+            <div class="block lg:hidden">
+                <?php foreach ($products as $product): ?>
+                <div class="border-b border-gray-200 p-4 hover:bg-gray-50">
+                    <div class="flex items-start gap-3 mb-3">
+                        <?php if (!empty($product['image_url']) && file_exists($product['image_url'])): ?>
+                        <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="h-16 w-16 object-cover rounded">
+                        <?php else: ?>
+                        <div class="h-16 w-16 bg-gray-200 flex items-center justify-center rounded flex-shrink-0">
+                            <i class="fas fa-image text-gray-400"></i>
+                        </div>
+                        <?php endif; ?>
+                        
+                        <div class="flex-1 min-w-0">
+                            <div class="text-sm font-medium text-gray-900 mb-1"><?php echo htmlspecialchars($product['name']); ?></div>
+                            <div class="text-xs text-gray-500 mb-2 line-clamp-2"><?php echo htmlspecialchars(substr($product['description'], 0, 80)) . '...'; ?></div>
+                            <div class="flex flex-wrap gap-2 items-center">
+                                <span class="px-2 py-1 text-xs rounded-full <?php 
+                                    switch($product['category']) {
+                                        case 'thermoplastic': echo 'bg-blue-100 text-blue-800'; break;
+                                        case 'engineering': echo 'bg-green-100 text-green-800'; break;
+                                        case 'custom': echo 'bg-purple-100 text-purple-800'; break;
+                                        case 'appliance': echo 'bg-yellow-100 text-yellow-800'; break;
+                                        case 'automotive': echo 'bg-red-100 text-red-800'; break;
+                                        case 'industrial': echo 'bg-indigo-100 text-indigo-800'; break;
+                                        default: echo 'bg-gray-100 text-gray-800';
+                                    }
+                                ?>">
+                                    <?php echo ucfirst($product['category']); ?>
+                                </span>
+                                <span class="text-xs text-gray-500">
+                                    <?php echo date('M d, Y', strtotime($product['created_at'])); ?>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        <a href="admin_products.php?action=edit&id=<?php echo $product['id']; ?>" class="flex-1 text-center bg-primary hover:bg-secondary text-white py-2 px-3 rounded text-sm">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <button onclick="deleteProduct(<?php echo $product['id']; ?>, '<?php echo addslashes($product['name']); ?>')" class="flex-1 text-center bg-red-600 hover:bg-red-800 text-white py-2 px-3 rounded text-sm">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+                <?php if (empty($products)): ?>
+                <div class="py-8 px-4 text-center text-gray-500">
+                    <i class="fas fa-box-open text-gray-400 text-4xl mb-3"></i>
+                    <p class="text-sm">No products found. Click "Add New Product" to create one.</p>
+                </div>
+                <?php endif; ?>
+            </div>
+            
+            <!-- Desktop Table View -->
+            <div class="hidden lg:block overflow-x-auto">
                 <table class="min-w-full">
                     <thead class="bg-gray-50">
                         <tr>

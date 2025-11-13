@@ -80,13 +80,13 @@ if (isset($_POST['send_reply']) && isset($_POST['inquiry_id']) && isset($_POST['
     ";
 
     // Prepare and send email with Brevo
-    $brevo_api_key = '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';
+    $brevo_api_key = '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';
     $config = Configuration::getDefaultConfiguration()->setApiKey('api-key', $brevo_api_key);
     $apiInstance = new TransactionalEmailsApi(new GuzzleHttp\Client(), $config);
 
     $sendSmtpEmail = new SendSmtpEmail([
         'subject' => $subject,
-        'sender' => ['name' => 'JPMC', 'email' => 'danielrossevia@gmail.com'],
+        'sender' => ['name' => 'JPMC', 'email' => 'aisat.castillo222436@gmail.com'],
         'to' => [['email' => $to_email, 'name' => $recipient_name]],
         'htmlContent' => $email_content
     ]);
@@ -233,6 +233,24 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
+        .admin-content {
+            transition: margin-left 0.3s ease;
+            padding: 1rem;
+        }
+        
+        @media (min-width: 768px) {
+            .admin-content {
+                padding: 1.5rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .admin-content {
+                margin-left: 16rem;
+                padding: 2rem;
+            }
+        }
+        
         .inquiry-card {
             transition: all 0.3s ease;
         }
@@ -261,14 +279,15 @@ $result = $conn->query($sql);
 <body class="bg-gray-50 flex">
     <?php include 'includes/adminsidebar.php'; ?>
 
-    <div class="flex-1 ml-64">
-        <div class="container mx-auto px-6 py-8">
-            <div class="flex justify-between items-center mb-6">
-                <h1 class="text-3xl font-bold text-gray-800">Customer Inquiries</h1>
-                <div class="flex space-x-2">
-                <a href="admin_dashboard.php" class="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg transition">
+    <div class="admin-content pt-16 px-4 pb-4 sm:px-6 sm:py-8 lg:ml-64">
+        <div class="w-full">
+            <div class="flex flex-col gap-4 mb-6">
+                <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800">Customer Inquiries</h1>
+                <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                <a href="admin.php" class="w-full sm:w-auto bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg transition text-center">
                     <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
-                </a>                <a href="admin_export_inquiries.php<?php
+                </a>
+                <a href="admin_export_inquiries.php<?php
                     $export_params = array();
                     if (isset($_GET['status']) && !empty($_GET['status'])) {
                         $export_params[] = "status=" . urlencode($_GET['status']);
@@ -280,7 +299,7 @@ $result = $conn->query($sql);
                         $export_params[] = "search=" . urlencode($_GET['search']);
                     }
                     echo !empty($export_params) ? "?" . implode("&", $export_params) : "";
-                ?>" class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg transition">
+                ?>" class="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg transition text-center">
                     <i class="fas fa-file-export mr-2"></i> Export CSV
                 </a>
             </div>
@@ -301,7 +320,7 @@ $result = $conn->query($sql);
         <?php endif; ?>
         
         <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
             <?php
             // Get count of inquiries by status
             $status_counts = [];
@@ -369,7 +388,7 @@ $result = $conn->query($sql);
         <!-- Filters -->
         <div class="bg-white rounded-lg shadow-md p-6 mb-8">
             <h2 class="text-lg font-bold text-gray-800 mb-4">Filter Inquiries</h2>
-            <form action="admin_inquiries.php" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <form action="admin_inquiries.php" method="GET" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div>
                     <label for="status_filter" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
                     <select id="status_filter" name="status" class="w-full rounded-lg border-gray-300 p-2 border focus:ring-primary focus:border-primary">
@@ -430,26 +449,27 @@ $result = $conn->query($sql);
                     <div class="inquiry-card p-6 border-b border-gray-200 <?php echo $status_class; ?>">
                         <div class="flex flex-col md:flex-row justify-between">
                             <div class="flex-1">
-                                <div class="flex items-center mb-2">
-                                    <h3 class="text-lg font-semibold text-gray-800"><?php echo htmlspecialchars($row['name']); ?></h3>
-                                    <span class="ml-3 text-sm text-gray-500"><?php echo htmlspecialchars($row['email']); ?></span>
+                                <div class="flex flex-col sm:flex-row sm:items-center mb-2 gap-1 sm:gap-3">
+                                    <h3 class="text-base sm:text-lg font-semibold text-gray-800"><?php echo htmlspecialchars($row['name']); ?></h3>
+                                    <span class="text-xs sm:text-sm text-gray-500 break-all"><?php echo htmlspecialchars($row['email']); ?></span>
                                     <?php if ($row['phone']): ?>
-                                    <span class="ml-3 text-sm text-gray-500">
+                                    <span class="text-xs sm:text-sm text-gray-500">
                                         <i class="fas fa-phone-alt text-gray-400 mr-1"></i> <?php echo htmlspecialchars($row['phone']); ?>
                                     </span>
                                     <?php endif; ?>
                                 </div>
                                 
-                                <div class="flex items-center mb-2">
-                                    <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded-full mr-2">
+                                <div class="flex flex-wrap items-center gap-2 mb-2">
+                                    <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded-full">
                                         <?php echo htmlspecialchars(ucfirst($row['subject'])); ?>
                                     </span>
-                                    <span class="text-sm text-gray-500">
+                                    <span class="text-xs sm:text-sm text-gray-500">
                                         <i class="far fa-clock text-gray-400 mr-1"></i> 
-                                        <?php echo date('M j, Y g:i A', strtotime($row['date_submitted'])); ?>
+                                        <?php echo date('M j, Y', strtotime($row['date_submitted'])); ?>
+                                        <span class="hidden sm:inline"><?php echo date('g:i A', strtotime($row['date_submitted'])); ?></span>
                                     </span>
                                     <?php if ($row['company']): ?>
-                                    <span class="ml-3 text-sm text-gray-500">
+                                    <span class="text-xs sm:text-sm text-gray-500">
                                         <i class="far fa-building text-gray-400 mr-1"></i> 
                                         <?php echo htmlspecialchars($row['company']); ?>
                                     </span>
@@ -472,10 +492,10 @@ $result = $conn->query($sql);
                                 </div>
                             </div>
                             
-                            <div class="flex items-center mt-4 md:mt-0 space-x-2">
-                                <form method="POST" class="inline">
+                            <div class="flex flex-col sm:flex-row items-stretch sm:items-center mt-4 md:mt-0 gap-2">
+                                <form method="POST" class="w-full sm:w-auto">
                                     <input type="hidden" name="inquiry_id" value="<?php echo $row['id']; ?>">
-                                    <select name="status" onchange="this.form.submit()" class="rounded-lg border-gray-300 p-2 border text-sm focus:ring-primary focus:border-primary">
+                                    <select name="status" onchange="this.form.submit()" class="w-full sm:w-auto rounded-lg border-gray-300 p-2 border text-xs sm:text-sm focus:ring-primary focus:border-primary">
                                         <option value="new" <?php echo $row['status'] == 'new' ? 'selected' : ''; ?>>New</option>
                                         <option value="in-progress" <?php echo $row['status'] == 'in-progress' ? 'selected' : ''; ?>>In Progress</option>
                                         <option value="resolved" <?php echo $row['status'] == 'resolved' ? 'selected' : ''; ?>>Resolved</option>
@@ -484,15 +504,15 @@ $result = $conn->query($sql);
                                     <input type="hidden" name="update_status" value="1">
                                 </form>
                                 
-                                <button class="reply-btn bg-primary hover:bg-secondary text-white py-1 px-3 rounded-lg transition text-sm">
+                                <button class="reply-btn w-full sm:w-auto bg-primary hover:bg-secondary text-white py-2 sm:py-1 px-3 rounded-lg transition text-xs sm:text-sm">
                                     <i class="fas fa-reply mr-1"></i> Reply
                                 </button>
-                                
-                                <form method="POST" class="inline delete-form">
+
+                                <form method="POST" class="w-full sm:w-auto delete-form">
                                     <input type="hidden" name="inquiry_id" value="<?php echo $row['id']; ?>">
                                     <input type="hidden" name="delete_inquiry" value="1">
-                                    <button type="button" class="delete-btn bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-lg transition text-sm">
-                                        <i class="fas fa-trash-alt"></i>
+                                    <button type="button" class="delete-btn w-full sm:w-auto bg-red-500 hover:bg-red-600 text-white py-2 sm:py-1 px-3 rounded-lg transition text-xs sm:text-sm">
+                                        <i class="fas fa-trash-alt mr-1 sm:mr-0"></i><span class="sm:hidden"> Delete</span>
                                     </button>
                                 </form>
                             </div>

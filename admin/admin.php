@@ -1,12 +1,12 @@
 <?php
 // // Start session
-// session_start();
+ session_start();
 
 // // Check if user is logged in
-// if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-//     header("Location: admin_login.php");
-//     exit;
-// }
+ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+     header("Location: admin_login.php");
+     exit;
+ }
 
 require_once '../includes/db_connection.php';
 
@@ -51,6 +51,14 @@ if ($result && $result->num_rows > 0) {
 }
 
 $conn->close();
+
+// Get monthly visitor data for chart
+$monthlyFile = '../monthly_counter.json';
+if (file_exists($monthlyFile)) {
+    $monthlyVisitors = json_decode(file_get_contents($monthlyFile), true);
+} else {
+    $monthlyVisitors = array_fill(0, 12, 0);
+}
 ?>
 
 <!DOCTYPE html>
@@ -59,7 +67,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | James Polymers</title>
-    <link rel="icon" type="image/png" href="/assets/img/tab_icon.png">
+    <link rel="icon" type="image/png" href="../assets/img/tab_icon.png">
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -154,16 +162,26 @@ $conn->close();
                 </div>
             </div>
             
+            <?php
+            // Get visitor count
+            $visitorCount = 0;
+            $counterFile = '../counter.txt';
+            if (file_exists($counterFile)) {
+                $visitorCount = (int)file_get_contents($counterFile);
+            }
+            ?>
             <div class="card-stats bg-white rounded-lg shadow p-6 flex items-center">
                 <div class="rounded-full bg-yellow-100 p-3 mr-4">
                     <i class="fas fa-users text-yellow-500 text-xl"></i>
                 </div>
                 <div>
-                    <p class="text-gray-600 text-sm">Visitors (Monthly)</p>
-                    <h2 class="text-3xl font-bold text-gray-800">2,461</h2>
+                    <p class="text-gray-600 text-sm">Visitors</p>
+                    <h2 class="text-3xl font-bold text-gray-800"><?php echo number_format($visitorCount); ?></h2>
                 </div>
             </div>
         </div>
+
+        
         
         <!-- Charts & Tables Row -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
@@ -194,7 +212,16 @@ $conn->close();
                         <tbody class="text-gray-600 text-sm">
                             <?php foreach ($recentProducts as $product): ?>
                             <tr class="border-b border-gray-200 hover:bg-gray-50">
-                                <td class="py-3 px-4"><?php echo htmlspecialchars($product['name']); ?></td>
+                                <td class="py-3 px-4">
+                                    <div class="flex items-center">
+                                        <?php if (!empty($product['image'])): ?>
+                                        <img src="../<?php echo htmlspecialchars($product['image']); ?>" 
+                                            alt="<?php echo htmlspecialchars($product['name']); ?>" 
+                                            class="w-10 h-10 rounded object-cover mr-3">
+                                        <?php endif; ?>
+                                        <span><?php echo htmlspecialchars($product['name']); ?></span>
+                                    </div>
+                                </td>
                                 <td class="py-3 px-4">
                                     <span class="px-2 py-1 rounded-full text-xs <?php 
                                         switch($product['category']) {
@@ -215,7 +242,13 @@ $conn->close();
                             
                             <?php if (empty($recentProducts)): ?>
                             <tr>
-                                <td colspan="3" class="py-4 text-center text-gray-500">No products found</td>
+                                <td colspan="3" class="py-8 text-center">
+                                    <i class="fas fa-box-open text-gray-300 text-4xl mb-3"></i>
+                                    <p class="text-gray-500 font-medium">No products found</p>
+                                    <a href="admin_products.php?action=new" class="text-primary hover:text-secondary text-sm mt-2 inline-block">
+                                        <i class="fas fa-plus mr-1"></i> Add your first product
+                                    </a>
+                                </td>
                             </tr>
                             <?php endif; ?>
                         </tbody>
@@ -250,12 +283,12 @@ $conn->close();
                     <span class="text-purple-800 font-medium">Add Service</span>
                 </a>
                 
-                <a href="admin_news.php?action=new" class="bg-yellow-50 hover:bg-yellow-100 p-4 rounded-lg flex items-center transition duration-300">
+                <!-- <a href="admin_news.php?action=new" class="bg-yellow-50 hover:bg-yellow-100 p-4 rounded-lg flex items-center transition duration-300">
                     <div class="rounded-full bg-yellow-100 p-3 mr-3">
                         <i class="fas fa-plus text-yellow-500"></i>
                     </div>
                     <span class="text-yellow-800 font-medium">Add News</span>
-                </a>
+                </a> -->
             </div>
         </div>
     </div>
@@ -271,7 +304,7 @@ $conn->close();
                     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                     datasets: [{
                         label: 'Monthly Visitors',
-                        data: [1500, 1800, 2200, 1900, 2400, 2600, 2300, 2500, 2800, 3000, 2900, 3100],
+                        data: <?php echo json_encode($monthlyVisitors); ?>,
                         backgroundColor: 'rgba(0, 102, 204, 0.1)',
                         borderColor: 'rgba(0, 102, 204, 1)',
                         borderWidth: 2,

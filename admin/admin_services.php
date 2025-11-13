@@ -1,12 +1,12 @@
 <?php
 // Start session
-// session_start();
+ session_start();
 
 // // Check if user is logged in
-// if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-//     header("Location: admin_login.php");
-//     exit;
-// }
+ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+     header("Location: admin_login.php");
+     exit;
+ }
 
 require_once '../includes/db_connection.php';
 
@@ -196,11 +196,19 @@ $conn->close();
     <style>
         .admin-content {
             transition: margin-left 0.3s ease;
+            padding: 1rem;
+        }
+        
+        @media (min-width: 768px) {
+            .admin-content {
+                padding: 1.5rem;
+            }
         }
         
         @media (min-width: 1024px) {
             .admin-content {
-                margin-left: 16rem; /* w-64 = 16rem */
+                margin-left: 16rem;
+                padding: 2rem;
             }
         }
         
@@ -226,21 +234,23 @@ $conn->close();
     <!-- Main Content -->
     <div class="admin-content p-4 sm:p-6 lg:p-8">
         <!-- Admin Header -->
-        <div class="flex justify-between items-center mb-6">
-            <div>
-                <h1 class="text-2xl font-bold text-gray-800">Manage Services</h1>
-                <p class="text-gray-600">Add, edit or delete company services</p>
-            </div>
-            <div>
-                <?php if ($action != "new" && $action != "edit"): ?>
-                <a href="admin_services.php?action=new" class="bg-primary hover:bg-secondary text-white py-2 px-4 rounded-lg transition-all flex items-center">
-                    <i class="fas fa-plus mr-2"></i> Add New Service
-                </a>
-                <?php else: ?>
-                <a href="admin_services.php" class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-lg transition-all flex items-center">
-                    <i class="fas fa-arrow-left mr-2"></i> Back to Services
-                </a>
-                <?php endif; ?>
+        <div class="mb-6">
+            <div class="flex flex-col gap-4">
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-bold text-gray-800">Manage Services</h1>
+                    <p class="text-sm sm:text-base text-gray-600">Add, edit or delete company services</p>
+                </div>
+                <div class="w-full sm:w-auto">
+                    <?php if ($action != "new" && $action != "edit"): ?>
+                    <a href="admin_services.php?action=new" class="bg-primary hover:bg-secondary text-white py-2 px-4 rounded-lg transition-all flex items-center justify-center w-full sm:w-auto">
+                        <i class="fas fa-plus mr-2"></i> Add New Service
+                    </a>
+                    <?php else: ?>
+                    <a href="admin_services.php" class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-lg transition-all flex items-center justify-center w-full sm:w-auto">
+                        <i class="fas fa-arrow-left mr-2"></i> Back to Services
+                    </a>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
         
@@ -286,7 +296,7 @@ $conn->close();
                     
                     <?php if (!empty($service_image_url)): ?>
                     <div class="mb-3 flex items-center">
-                        <img src="<?php echo htmlspecialchars($service_image_url); ?>" alt="Current service image" class="h-20 w-auto border rounded-md">
+                        <img src="../<?php echo htmlspecialchars($service_image_url); ?>" alt="Current service image" class="h-20 w-auto border rounded-md">
                         <span class="ml-3 text-sm text-gray-600">Current Image</span>
                     </div>
                     <?php endif; ?>
@@ -314,7 +324,7 @@ $conn->close();
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
             <?php foreach ($services as $service): ?>            <div class="service-card bg-white rounded-lg shadow overflow-hidden">
                 <div class="h-40 bg-cover bg-center relative" 
-                     style="background-image: url('<?php echo !empty($service['image_url']) ? htmlspecialchars($service['image_url']) : 'https://via.placeholder.com/800x600?text=No+Image'; ?>');">
+                     style="background-image: url('../<?php echo !empty($service['image_url']) ? htmlspecialchars($service['image_url']) : 'https://via.placeholder.com/800x600?text=No+Image'; ?>');">
                     
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                     

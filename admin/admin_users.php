@@ -34,103 +34,172 @@ require_once '../includes/db_connection.php';
     </script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        .admin-content {
+            transition: margin-left 0.3s ease;
+            padding: 1rem;
+        }
+        
+        @media (min-width: 768px) {
+            .admin-content {
+                padding: 1.5rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .admin-content {
+                margin-left: 16rem;
+                padding: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
 
 <?php include 'includes/adminsidebar.php'; ?>
 
 <!-- Main Content -->
-<div class="lg:ml-64 p-6 min-h-screen transition-all duration-300">
+<div class="admin-content min-h-screen transition-all duration-300">
     <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Manage Admin Users</h1>
-        <p class="text-sm text-gray-600">Create, edit, and manage administrator accounts</p>
+        <h1 class="text-xl sm:text-2xl font-bold text-gray-800">Manage Admin Users</h1>
+        <p class="text-xs sm:text-sm text-gray-600">Create, edit, and manage administrator accounts</p>
     </div>
     
     <!-- Action Buttons -->
-    <div class="mb-6 flex justify-between items-center">
-        <div>
-            <button id="addUserButton" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-blue-800 transition-colors flex items-center">
+    <div class="mb-6 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3">
+        <div class="w-full sm:w-auto">
+            <button id="addUserButton" class="w-full sm:w-auto bg-primary text-white px-4 py-2 rounded-md hover:bg-blue-800 transition-colors flex items-center justify-center">
                 <i class="fas fa-plus mr-2"></i> Add New Admin User
             </button>
         </div>
-        <div class="relative">
-            <input type="text" id="searchUsers" class="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Search users...">
+        <div class="relative w-full sm:w-auto">
+            <input type="text" id="searchUsers" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Search users...">
             <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
         </div>
     </div>
     
     <!-- Users Table -->
-    <div class="bg-white rounded-md shadow-md overflow-hidden">
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Login</th>
-                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    <?php
-                    // Fetch admin users from database
-                    $query = "SELECT * FROM admin_users ORDER BY created_at DESC";
-                    $result = $conn->query($query);
+<div class="bg-white rounded-md shadow-md overflow-hidden">
+    <!-- Mobile Card View -->
+    <div class="block lg:hidden">
+        <?php
+        // Fetch admin users from database
+        $query = "SELECT * FROM admin_users ORDER BY created_at DESC";
+        $result = $conn->query($query);
 
-                    if ($result && $result->num_rows > 0) {
-                        while ($user = $result->fetch_assoc()) {
-                            $statusClass = ($user['is_active'] == 1) ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
-                            $statusText = ($user['is_active'] == 1) ? 'Active' : 'Inactive';
-                            
-                            echo '<tr>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <div class="flex-shrink-0 h-10 w-10 bg-primary text-white rounded-full flex items-center justify-center">
-                                            <i class="fas fa-user"></i>
-                                        </div>
-                                        <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900">' . htmlspecialchars($user['name']) . '</div>
-                                            <div class="text-sm text-gray-500">' . htmlspecialchars($user['email']) . '</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900">Administrator</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ' . $statusClass . '">
-                                        ' . $statusText . '
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    ' . ($user['last_login'] ? date('M d, Y H:i', strtotime($user['last_login'])) : 'Never') . '
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="#" class="text-primary hover:text-blue-800 mr-3 edit-user" data-id="' . $user['id'] . '"><i class="fas fa-edit"></i></a>
-                                    <a href="#" class="text-red-600 hover:text-red-800 delete-user" data-id="' . $user['id'] . '"><i class="fas fa-trash-alt"></i></a>
-                                </td>
-                            </tr>';
-                        }
-                    } else {
-                        echo '<tr><td colspan="5" class="px-6 py-4 text-center">No users found</td></tr>';
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
+        if ($result && $result->num_rows > 0) {
+            while ($user = $result->fetch_assoc()) {
+                $statusClass = ($user['is_active'] == 1) ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+                $statusText = ($user['is_active'] == 1) ? 'Active' : 'Inactive';
+                
+                echo '<div class="border-b border-gray-200 p-4 hover:bg-gray-50">
+                    <div class="flex items-start gap-3 mb-3">
+                        <div class="flex-shrink-0 h-12 w-12 bg-primary text-white rounded-full flex items-center justify-center">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="text-sm font-semibold text-gray-900">' . htmlspecialchars($user['name']) . '</div>
+                            <div class="text-xs text-gray-500 break-all">' . htmlspecialchars($user['email']) . '</div>
+                            <div class="flex flex-wrap gap-2 mt-2">
+                                <span class="px-2 py-1 text-xs leading-5 font-semibold rounded-full ' . $statusClass . '">
+                                    ' . $statusText . '
+                                </span>
+                                <span class="text-xs text-gray-500">
+                                    Last: ' . ($user['last_login'] ? date('M d, Y', strtotime($user['last_login'])) : 'Never') . '
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        <a href="#" class="flex-1 text-center bg-primary hover:bg-blue-800 text-white py-2 px-3 rounded text-sm edit-user" data-id="' . $user['id'] . '">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <a href="#" class="flex-1 text-center bg-red-600 hover:bg-red-800 text-white py-2 px-3 rounded text-sm delete-user" data-id="' . $user['id'] . '">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </a>
+                    </div>
+                </div>';
+            }
+        } else {
+            echo '<div class="py-8 px-4 text-center text-gray-500">
+                <p class="text-sm">No users found</p>
+            </div>';
+        }
+        ?>
     </div>
     
+    <!-- Desktop Table View -->
+    <div class="hidden lg:block overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Login</th>
+                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                <?php
+                // Reset the query for desktop view
+                $result = $conn->query($query);
+                
+                if ($result && $result->num_rows > 0) {
+                    while ($user = $result->fetch_assoc()) {
+                        $statusClass = ($user['is_active'] == 1) ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+                        $statusText = ($user['is_active'] == 1) ? 'Active' : 'Inactive';
+                        
+                        echo '<tr>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 bg-primary text-white rounded-full flex items-center justify-center">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-medium text-gray-900">' . htmlspecialchars($user['name']) . '</div>
+                                        <div class="text-sm text-gray-500">' . htmlspecialchars($user['email']) . '</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900">Administrator</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ' . $statusClass . '">
+                                    ' . $statusText . '
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                ' . ($user['last_login'] ? date('M d, Y H:i', strtotime($user['last_login'])) : 'Never') . '
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <a href="#" class="text-primary hover:text-blue-800 mr-3 edit-user" data-id="' . $user['id'] . '"><i class="fas fa-edit"></i></a>
+                                <a href="#" class="text-red-600 hover:text-red-800 delete-user" data-id="' . $user['id'] . '"><i class="fas fa-trash-alt"></i></a>
+                            </td>
+                        </tr>';
+                    }
+                } else {
+                    echo '<tr><td colspan="5" class="px-6 py-4 text-center">No users found</td></tr>';
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+    
     <!-- Pagination -->
-    <div class="flex justify-between items-center mt-6">
-        <div class="text-sm text-gray-700">
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mt-6">
+        <div class="text-xs sm:text-sm text-gray-700 order-2 sm:order-1">
             Showing <span class="font-medium">1</span> to <span class="font-medium">10</span> of <span class="font-medium">20</span> results
         </div>
-        <div class="flex">
-            <a href="#" class="px-3 py-1 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-l-md">Previous</a>
-            <a href="#" class="px-3 py-1 border border-gray-300 bg-white text-sm font-medium text-primary hover:bg-gray-50">1</a>
-            <a href="#" class="px-3 py-1 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">2</a>
-            <a href="#" class="px-3 py-1 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-r-md">Next</a>
+        <div class="flex flex-wrap justify-center gap-1 order-1 sm:order-2">
+            <a href="#" class="px-3 py-1 border border-gray-300 bg-white text-xs sm:text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-l-md">Previous</a>
+            <a href="#" class="px-3 py-1 border border-gray-300 bg-white text-xs sm:text-sm font-medium text-primary hover:bg-gray-50">1</a>
+            <a href="#" class="px-3 py-1 border border-gray-300 bg-white text-xs sm:text-sm font-medium text-gray-700 hover:bg-gray-50">2</a>
+            <a href="#" class="px-3 py-1 border border-gray-300 bg-white text-xs sm:text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-r-md">Next</a>
         </div>
     </div>
 </div>
@@ -259,18 +328,22 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 if (data.success && data.user) {
                     const user = data.user;
-                    
+                                
                     modalTitle.textContent = 'Edit Admin User';
                     document.getElementById('userId').value = user.id;
                     document.getElementById('password').required = false;
-                    
+                                
                     document.getElementById('name').value = user.name;
                     document.getElementById('email').value = user.email;
                     document.getElementById('status').value = user.is_active;
-                                  } else {
+
+                    // ✅ Show the modal after populating data
+                    toggleModal(userModal, true);
+                } else {
                     alert(data.message || 'Failed to get user details');
                 }
             })
+
             .catch(error => {
                 console.error('Error:', error);
                 alert('An error occurred while getting user details');

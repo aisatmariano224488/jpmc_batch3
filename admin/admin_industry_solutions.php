@@ -137,7 +137,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Industry Solutions | James Polymers Admin</title>
-    <link rel="icon" type="image/png" href="assets/img/tab_icon.png">
+    <link rel="icon" type="image/png" href="../assets/img/tab_icon.png">
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -165,11 +165,19 @@ $conn->close();
     <style>
         .admin-content {
             transition: margin-left 0.3s ease;
+            padding: 1rem;
+        }
+        
+        @media (min-width: 768px) {
+            .admin-content {
+                padding: 1.5rem;
+            }
         }
         
         @media (min-width: 1024px) {
             .admin-content {
-                margin-left: 16rem; /* w-64 = 16rem */
+                margin-left: 16rem;
+                padding: 2rem;
             }
         }
     </style>
@@ -181,18 +189,18 @@ $conn->close();
     <!-- Main Content -->
     <div class="admin-content p-4 sm:p-6 lg:p-8">
         <!-- Admin Header -->
-        <div class="flex justify-between items-center mb-6">
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
             <div>
-                <h1 class="text-2xl font-bold text-gray-800">Industry Solutions</h1>
-                <p class="text-gray-600">Manage solutions for each industry</p>
+                <h1 class="text-xl sm:text-2xl font-bold text-gray-800">Industry Solutions</h1>
+                <p class="text-sm sm:text-base text-gray-600">Manage solutions for each industry</p>
             </div>
-            <div>
+            <div class="w-full sm:w-auto">
                 <?php if ($action != "new" && $action != "edit"): ?>
-                <a href="admin_industry_solutions.php?action=new" class="bg-primary hover:bg-secondary text-white py-2 px-4 rounded-lg transition-all flex items-center">
+                <a href="admin_industry_solutions.php?action=new" class="bg-primary hover:bg-secondary text-white py-2 px-4 rounded-lg transition-all flex items-center justify-center w-full sm:w-auto">
                     <i class="fas fa-plus mr-2"></i> Add New Solution
                 </a>
                 <?php else: ?>
-                <a href="admin_industry_solutions.php" class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-lg transition-all flex items-center">
+                <a href="admin_industry_solutions.php" class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-lg transition-all flex items-center justify-center w-full sm:w-auto">
                     <i class="fas fa-arrow-left mr-2"></i> Back to Solutions
                 </a>
                 <?php endif; ?>
@@ -245,11 +253,11 @@ $conn->close();
                     <p class="text-xs text-gray-500 mt-1">Describe the solution or product used in this industry.</p>
                 </div>
                 
-                <div class="flex items-center justify-end">
-                    <button type="button" onclick="window.location.href='admin_industry_solutions.php'" class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-lg mr-4 transition-all">
+                <div class="flex flex-col sm:flex-row items-center justify-end gap-3">
+                    <button type="button" onclick="window.location.href='admin_industry_solutions.php'" class="w-full sm:w-auto bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-lg transition-all">
                         Cancel
                     </button>
-                    <button type="submit" class="bg-primary hover:bg-secondary text-white py-2 px-6 rounded-lg transition-all">
+                    <button type="submit" class="w-full sm:w-auto bg-primary hover:bg-secondary text-white py-2 px-6 rounded-lg transition-all">
                         <?php echo $action == "new" ? "Add Solution" : "Update Solution"; ?>
                     </button>
                 </div>
@@ -260,7 +268,7 @@ $conn->close();
         
         <!-- Filter Options -->
         <div class="bg-white rounded-lg shadow p-4 mb-6">
-            <form action="admin_industry_solutions.php" method="get" class="flex flex-wrap items-center gap-4">
+            <form action="admin_industry_solutions.php" method="get" class="flex flex-col sm:flex-row items-stretch sm:items-end gap-3">
                 <div class="flex-grow">
                     <label for="filter" class="block text-sm font-medium text-gray-700 mb-1">Filter by Industry</label>
                     <select id="filter" name="filter" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary" onchange="this.form.submit()">
@@ -272,12 +280,12 @@ $conn->close();
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="flex items-end">
-                    <button type="submit" class="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg transition-all">
+                <div class="flex gap-2">
+                    <button type="submit" class="flex-1 sm:flex-none bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg transition-all">
                         <i class="fas fa-filter mr-2"></i> Filter
                     </button>
                     <?php if ($filter_industry > 0): ?>
-                    <a href="admin_industry_solutions.php" class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-lg ml-2 transition-all">
+                    <a href="admin_industry_solutions.php" class="flex-1 sm:flex-none bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded-lg transition-all text-center">
                         <i class="fas fa-times mr-2"></i> Clear
                     </a>
                     <?php endif; ?>
@@ -286,7 +294,42 @@ $conn->close();
         </div>
         
         <div class="bg-white rounded-lg shadow overflow-hidden">
-            <div class="overflow-x-auto">
+            <!-- Mobile Card View -->
+            <div class="block lg:hidden">
+                <?php foreach ($solutions as $item): ?>
+                <div class="border-b border-gray-200 p-4 hover:bg-gray-50">
+                    <div class="mb-3">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-industry text-primary mr-2"></i>
+                            <span class="text-sm font-semibold text-gray-900"><?php echo htmlspecialchars($item['industry_name']); ?></span>
+                        </div>
+                        <div class="text-sm text-gray-700 pl-6"><?php echo htmlspecialchars($item['solution']); ?></div>
+                    </div>
+                    
+                    <div class="flex gap-2 pl-6">
+                        <a href="admin_industry_solutions.php?action=edit&id=<?php echo $item['id']; ?>" class="flex-1 text-center bg-primary hover:bg-secondary text-white py-2 px-3 rounded text-sm">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <button onclick="deleteConfirm(<?php echo $item['id']; ?>, '<?php echo addslashes($item['solution']); ?>')" class="flex-1 text-center bg-red-600 hover:bg-red-800 text-white py-2 px-3 rounded text-sm">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+                <?php if (empty($solutions)): ?>
+                <div class="py-8 px-4 text-center text-gray-500">
+                    <i class="fas fa-info-circle text-gray-400 text-4xl mb-3"></i>
+                    <?php if ($filter_industry > 0): ?>
+                    <p class="text-sm">No solutions found for this industry. Click "Add New Solution" to create one.</p>
+                    <?php else: ?>
+                    <p class="text-sm">No solutions found. Click "Add New Solution" to create one.</p>
+                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
+            </div>
+            
+            <!-- Desktop Table View -->
+            <div class="hidden lg:block overflow-x-auto">
                 <table class="min-w-full">
                     <thead class="bg-gray-50">
                         <tr>

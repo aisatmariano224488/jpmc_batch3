@@ -379,12 +379,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </span>
                         </div>
                         
-                        <div class="flex items-center justify-between mb-6">
+                        <!-- <div class="flex items-center justify-between mb-6">
                             <label class="flex items-center">
                                 <input type="checkbox" class="form-checkbox h-4 w-4 text-primary">
                                 <span class="ml-2 text-sm text-gray-600">Remember me</span>
                             </label>
-                        </div>
+                        </div> -->
                         
                         <button type="submit" class="login-btn w-full" id="loginBtn">
                             <span id="loginBtnText">Login</span>
