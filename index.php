@@ -586,9 +586,9 @@ $canonicalUrl = 'https://jamespolymers.com/';
         <!-- Customers Swipe Carousel -->
         <div class="customers-carousel-container relative">
             <!-- Scroll Indicator - Hidden on mobile, visible on desktop -->
-            <div class="text-center mb-4 text-gray-600 text-sm hidden md:block">
+            <!-- <div class="text-center mb-4 text-gray-600 text-sm hidden md:block">
                 <i class="fas fa-hand-pointer mr-1"></i> Scroll freely or click to navigate
-            </div>
+            </div> -->
 
             <!-- Carousel Track -->
             <div class="customers-carousel-track overflow-hidden">
