@@ -184,6 +184,125 @@ $canonicalUrl = 'https://jamespolymers.com/';
 
     <style>
         <?php include 'includes/css/index.css'; ?>
+        
+        /* Customers Carousel Styles */
+        .customers-carousel-container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .customers-carousel-track {
+            position: relative;
+            width: 100%;
+        }
+
+        .customers-carousel-slides {
+            display: flex;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .customers-carousel-slide {
+            flex: 0 0 auto;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .customer-card {
+            min-height: 280px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .customer-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .customers-carousel-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .customers-carousel-nav {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            flex-shrink: 0;
+        }
+
+        .customers-carousel-nav:hover {
+            transform: scale(1.05);
+        }
+
+        .customers-carousel-nav:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .customers-carousel-nav:active {
+            transform: scale(0.95);
+        }
+
+        .customers-carousel-counter {
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .customers-carousel-dots-wrapper {
+            margin-top: 1rem;
+        }
+
+        .customers-carousel-dot {
+            transition: all 0.3s ease;
+        }
+
+        .customers-carousel-dot:hover {
+            transform: scale(1.2);
+            background-color: #004d99;
+        }
+
+        .customers-carousel-dot.active {
+            background-color: #0066cc;
+            transform: scale(1.3);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .customers-carousel-slide {
+                width: 100% !important;
+            }
+            
+            .customers-carousel-nav {
+                width: 3rem;
+                height: 3rem;
+            }
+            
+            .customers-carousel-controls {
+                gap: 0.5rem;
+            }
+            
+            .customers-carousel-counter {
+                font-size: 0.875rem;
+                min-width: 50px;
+            }
+        }
+
+        @media (min-width: 641px) and (max-width: 1023px) {
+            .customers-carousel-slide {
+                width: 50% !important;
+            }
+        }
+
+        @media (min-width: 1024px) and (max-width: 1279px) {
+            .customers-carousel-slide {
+                width: 33.333% !important;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .customers-carousel-slide {
+                width: 25% !important;
+            }
+        }
     </style>
 </head>
 
@@ -454,60 +573,106 @@ $canonicalUrl = 'https://jamespolymers.com/';
         </div>
     </section>
 
-    <!-- Customers Section -->
-    <section class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4">
-                <?php echo getHomeContent('customers', 'heading', 'Our Valued Customers'); ?>
-            </h2>
-            <p class="text-xl text-center text-gray-600 max-w-3xl mx-auto mb-12">
-                <?php echo getHomeContent('customers', 'subheading', "We're proud to partner with industry leaders across various sectors, providing them with high-performance polymer solutions."); ?>
-            </p>
+<!-- Customers Section with Carousel -->
+<section class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4">
+            <?php echo getHomeContent('customers', 'heading', 'Our Valued Customers'); ?>
+        </h2>
+        <p class="text-xl text-center text-gray-600 max-w-3xl mx-auto mb-12">
+            <?php echo getHomeContent('customers', 'subheading', "We're proud to partner with industry leaders across various sectors, providing them with high-performance polymer solutions."); ?>
+        </p>
 
-            <!-- Honeycomb Layout -->
-            <div class="hex-wrapper" role="list" aria-label="Our valued customers">
-                <?php
-                $layout = [
-                    [null, 1, null],
-                    [null, 2, 3, null],
-                    [null, 4, 5, 6, null],
-                    [null, 7, 8, 9, 10, null],
-                    [null, 11, 12, 13, 14, 15, null]
-                ];
-                $max_logo = 1000;
-                $logo_imgs = [];
-                for ($i = 1; $i <= $max_logo; $i++) {
-                    $logo = formatImageUrl(getHomeContent('customers', "customer{$i}_logo", ""));
-                    $logo_imgs[$i] = ($logo && strpos($logo, 'assets/home/') !== strlen($logo) - 11) ? $logo : null;
-                }
+        <!-- Customers Swipe Carousel -->
+        <div class="customers-carousel-container relative">
+            <!-- Scroll Indicator - Hidden on mobile, visible on desktop -->
+            <div class="text-center mb-4 text-gray-600 text-sm hidden md:block">
+                <i class="fas fa-hand-pointer mr-1"></i> Scroll freely or click to navigate
+            </div>
 
-                $hexIndex = 0; // Counter for animation delay
-
-                foreach ($layout as $row_idx => $row) {
-                    $is_offset = $row_idx % 2 !== 0 ? ' offset' : '';
-                    echo '<div class="hex-row' . $is_offset . '">';
-                    foreach ($row as $cell) {
-                        if ($cell === null) {
-                            echo '<div class="hexagon invisible"><div class="hex-inner"></div></div>';
-                        } else {
-                            $delay = $hexIndex * 5;
-                            echo '<div class="hexagon" data-aos="flip-right" data-aos-delay="' . $delay . '" role="listitem">';
-                            echo '<div class="hex-inner">';
-                            if (isset($logo_imgs[$cell]) && $logo_imgs[$cell]) {
-                                echo '<img src="' . $logo_imgs[$cell] . '" alt="' . getHomeContent('customers', "customer{$cell}_name", "Customer Logo") . ' - James Polymers Partner" loading="lazy">';
-                            } else {
-                                echo '<span class="coming-soon">Coming Soon</span>';
-                            }
-                            echo '</div></div>';
-                            $hexIndex++;
+            <!-- Carousel Track -->
+            <div class="customers-carousel-track overflow-hidden">
+                <div class="customers-carousel-slides flex transition-transform duration-600 ease-in-out" id="customersCarouselTrack">
+                    <?php
+                    // Get all customer logos from database
+                    $customer_query = "SELECT id, field_name, value, label FROM home_sections 
+                                      WHERE section_name = 'customers' 
+                                      AND field_name LIKE 'customer%_logo' 
+                                      AND value != '' 
+                                      ORDER BY display_order";
+                    $customer_result = $conn->query($customer_query);
+                    
+                    $customers = [];
+                    if ($customer_result && $customer_result->num_rows > 0) {
+                        while ($row = $customer_result->fetch_assoc()) {
+                            $customers[] = $row;
                         }
                     }
-                    echo '</div>';
-                }
-                ?>
+                    
+                    if (!empty($customers)):
+                        foreach ($customers as $index => $customer):
+                            // Check if it's a URL, if not, check both assets/home and assets/img
+                            if (filter_var($customer['value'], FILTER_VALIDATE_URL)) {
+                                $logo_path = $customer['value'];
+                            } elseif (file_exists('assets/home/' . $customer['value'])) {
+                                $logo_path = 'assets/home/' . $customer['value'];
+                            } else {
+                                $logo_path = 'assets/img/' . $customer['value'];
+                            }
+                            $delay = ($index % 4) * 150;
+                            
+                            // Extract just the number from the label for alt text
+                            $customer_number = preg_replace('/[^0-9]/', '', $customer['label']);
+                    ?>
+                        <div class="customers-carousel-slide w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 flex-shrink-0 px-3 <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo $index; ?>">
+                            <div data-aos="fade-up" data-aos-delay="<?php echo $delay; ?>" class="customer-card bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full p-6 items-center justify-center hover:shadow-xl transition duration-300">
+                                <div class="w-full h-48 flex items-center justify-center">
+                                    <img src="<?php echo htmlspecialchars($logo_path); ?>" 
+                                         alt="Customer <?php echo htmlspecialchars($customer_number); ?> - James Polymers Partner" 
+                                         class="max-w-full max-h-full object-contain"
+                                         loading="lazy">
+                                </div>
+                            </div>
+                        </div>
+                    <?php 
+                        endforeach;
+                    else:
+                    ?>
+                        <div class="w-full text-center py-12">
+                            <p class="text-gray-500 text-lg">No customer logos available yet.</p>
+                        </div>
+                    <?php endif; ?>
+                </div>
             </div>
+
+            <?php if (!empty($customers)): ?>
+            <!-- Navigation Controls -->
+            <div class="customers-carousel-controls flex justify-center items-center mt-8 gap-3">
+                <button class="customers-carousel-nav prev bg-primary hover:bg-secondary text-white rounded-full w-12 h-12 flex items-center justify-center transition duration-300 shadow-lg flex-shrink-0" onclick="customersPrevSlide()" aria-label="Previous customers">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+
+                <div class="customers-carousel-counter text-sm text-gray-600 font-semibold px-3">
+                    <span id="customersCurrentSlide">1</span> / <span id="customersTotalSlides"><?php echo count($customers); ?></span>
+                </div>
+
+                <button class="customers-carousel-nav next bg-primary hover:bg-secondary text-white rounded-full w-12 h-12 flex items-center justify-center transition duration-300 shadow-lg flex-shrink-0" onclick="customersNextSlide()" aria-label="Next customers">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            
+            <!-- Dots Indicators (Separate Row) -->
+            <div class="customers-carousel-dots-wrapper flex justify-center mt-4">
+                <div class="customers-carousel-dots flex gap-2" id="customersCarouselDots">
+                    <?php for ($i = 0; $i < count($customers); $i++): ?>
+                        <div class="customers-carousel-dot w-2.5 h-2.5 rounded-full bg-gray-300 cursor-pointer transition duration-300 <?php echo $i === 0 ? 'active bg-primary' : ''; ?>" onclick="customersGoToSlide(<?php echo $i; ?>)" aria-label="Go to slide <?php echo $i + 1; ?>"></div>
+                    <?php endfor; ?>
+                </div>
+            </div>
+            <?php endif; ?>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Stats Section with Schema -->
     <section class="py-16 bg-white" data-aos="fade-up" itemscope itemtype="https://schema.org/Organization">
@@ -549,6 +714,179 @@ $canonicalUrl = 'https://jamespolymers.com/';
     <!-- Javascript -->
     <script src="includes/javascript/index.js" defer></script>
 
+    <!-- Customers Carousel JavaScript -->
+    <script>
+    // Customers Carousel JavaScript
+    let customersCurrentSlide = 0;
+    let customersIsTransitioning = false;
+    let customersStartX = 0;
+    let customersEndX = 0;
+    let customersIsDragging = false;
+
+    function customersGetSlidesPerView() {
+        const width = window.innerWidth;
+        if (width < 640) return 1;
+        if (width < 1024) return 2;
+        if (width < 1280) return 3;
+        return 4;
+    }
+
+    function customersGetTotalSlides() {
+        const slides = document.querySelectorAll('.customers-carousel-slide');
+        const slidesPerView = customersGetSlidesPerView();
+        return Math.max(1, slides.length - slidesPerView + 1);
+    }
+
+    function customersUpdateCarousel() {
+        const track = document.getElementById('customersCarouselTrack');
+        const slides = document.querySelectorAll('.customers-carousel-slide');
+        const dots = document.querySelectorAll('.customers-carousel-dot');
+        const slidesPerView = customersGetSlidesPerView();
+        
+        if (!track || slides.length === 0) return;
+        
+        const slideWidth = 100 / slidesPerView;
+        const offset = -(customersCurrentSlide * slideWidth);
+        
+        track.style.transform = `translateX(${offset}%)`;
+        
+        // Update active states
+        slides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === customersCurrentSlide);
+        });
+        
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === customersCurrentSlide);
+            dot.classList.toggle('bg-primary', index === customersCurrentSlide);
+        });
+        
+        // Update counter
+        const currentSlideEl = document.getElementById('customersCurrentSlide');
+        if (currentSlideEl) {
+            currentSlideEl.textContent = customersCurrentSlide + 1;
+        }
+    }
+
+    function customersNextSlide() {
+        if (customersIsTransitioning) return;
+        
+        const totalSlides = customersGetTotalSlides();
+        if (customersCurrentSlide < totalSlides - 1) {
+            customersIsTransitioning = true;
+            customersCurrentSlide++;
+            customersUpdateCarousel();
+            setTimeout(() => { customersIsTransitioning = false; }, 600);
+        }
+    }
+
+    function customersPrevSlide() {
+        if (customersIsTransitioning) return;
+        
+        if (customersCurrentSlide > 0) {
+            customersIsTransitioning = true;
+            customersCurrentSlide--;
+            customersUpdateCarousel();
+            setTimeout(() => { customersIsTransitioning = false; }, 600);
+        }
+    }
+
+    function customersGoToSlide(index) {
+        if (customersIsTransitioning) return;
+        
+        const totalSlides = customersGetTotalSlides();
+        if (index >= 0 && index < totalSlides) {
+            customersIsTransitioning = true;
+            customersCurrentSlide = index;
+            customersUpdateCarousel();
+            setTimeout(() => { customersIsTransitioning = false; }, 600);
+        }
+    }
+
+    // Initialize carousel when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+        const customersTrack = document.getElementById('customersCarouselTrack');
+        
+        if (customersTrack) {
+            // Touch events for swipe
+            customersTrack.addEventListener('touchstart', (e) => {
+                customersStartX = e.touches[0].clientX;
+                customersIsDragging = true;
+            });
+            
+            customersTrack.addEventListener('touchmove', (e) => {
+                if (!customersIsDragging) return;
+                customersEndX = e.touches[0].clientX;
+            });
+            
+            customersTrack.addEventListener('touchend', () => {
+                if (!customersIsDragging) return;
+                customersIsDragging = false;
+                
+                const diff = customersStartX - customersEndX;
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0) {
+                        customersNextSlide();
+                    } else {
+                        customersPrevSlide();
+                    }
+                }
+            });
+            
+            // Mouse events
+            customersTrack.addEventListener('mousedown', (e) => {
+                customersStartX = e.clientX;
+                customersIsDragging = true;
+                customersTrack.style.cursor = 'grabbing';
+            });
+            
+            customersTrack.addEventListener('mousemove', (e) => {
+                if (!customersIsDragging) return;
+                customersEndX = e.clientX;
+            });
+            
+            customersTrack.addEventListener('mouseup', () => {
+                if (!customersIsDragging) return;
+                customersIsDragging = false;
+                customersTrack.style.cursor = 'grab';
+                
+                const diff = customersStartX - customersEndX;
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0) {
+                        customersNextSlide();
+                    } else {
+                        customersPrevSlide();
+                    }
+                }
+            });
+            
+            customersTrack.addEventListener('mouseleave', () => {
+                customersIsDragging = false;
+                customersTrack.style.cursor = 'grab';
+            });
+        }
+        
+        // Update on window resize
+        let customersResizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(customersResizeTimer);
+            customersResizeTimer = setTimeout(() => {
+                const totalSlides = customersGetTotalSlides();
+                if (customersCurrentSlide >= totalSlides) {
+                    customersCurrentSlide = Math.max(0, totalSlides - 1);
+                }
+                customersUpdateCarousel();
+            }, 250);
+        });
+        
+        // Initialize
+        const totalSlidesEl = document.getElementById('customersTotalSlides');
+        if (totalSlidesEl) {
+            totalSlidesEl.textContent = customersGetTotalSlides();
+        }
+        customersUpdateCarousel();
+    });
+    </script>
+
     <!-- Performance Optimization -->
     <script>
     // Lazy loading for non-critical resources
@@ -575,7 +913,6 @@ $canonicalUrl = 'https://jamespolymers.com/';
             });
         }
     });
-
     </script>
 
 </body>
