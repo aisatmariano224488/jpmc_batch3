@@ -44,7 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Send notification email using Brevo SMTP
        // Send notification email using Brevo SDK
 try {
-    $brevo_api_key = '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';
+    // Load configuration
+    require_once __DIR__ . '/config.php';
+    
+    $brevo_api_key = BREVO_API_KEY;
     $config = Configuration::getDefaultConfiguration()->setApiKey('api-key', $brevo_api_key);
     $apiInstance = new TransactionalEmailsApi(new GuzzleHttp\Client(), $config);
 
@@ -106,8 +109,8 @@ try {
 
     $sendSmtpEmail = new SendSmtpEmail([
         'subject' => 'New Inquiry from Website - ' . $subject,
-        'sender' => ['name' => 'JPMC Website', 'email' => 'aisat.castillo222436@gmail.com'],
-        'to' => [['email' => 'aisat.castillo222436@gmail.com', 'name' => 'Admin']],
+        'sender' => ['name' => BREVO_SENDER_NAME, 'email' => BREVO_SENDER_EMAIL],
+        'to' => [['email' => BREVO_SENDER_EMAIL, 'name' => 'Admin']],
         'replyTo' => ['email' => $email, 'name' => $name],
         'htmlContent' => $email_content
     ]);

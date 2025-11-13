@@ -79,8 +79,11 @@ if (isset($_POST['send_reply']) && isset($_POST['inquiry_id']) && isset($_POST['
     </html>
     ";
 
+    // Load configuration
+    require_once __DIR__ . '/../config.php';
+
     // Prepare and send email with Brevo
-    $brevo_api_key = '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';
+    $brevo_api_key = BREVO_API_KEY;
     $config = Configuration::getDefaultConfiguration()->setApiKey('api-key', $brevo_api_key);
     $apiInstance = new TransactionalEmailsApi(new GuzzleHttp\Client(), $config);
 
