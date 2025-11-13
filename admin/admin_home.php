@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $section_name = 'customers';
             $field_name = "customer{$next_num}_logo";
             $field_type = 'image';
-            $label = "Customer {$next_num} Logo";
+            $label = "Customer {$next_num}";
             $value = '';
             $display_order = $max_order + 1; // Set to max_order + 1 to place at bottom
             
@@ -101,9 +101,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmt->execute();
                 }
 
-                $_SESSION['success_message'] = "New customer section added successfully";
+                $_SESSION['success_message'] = "New customer added successfully to the carousel";
             } else {
-                $_SESSION['error_message'] = "Error adding customer section: " . $conn->error;
+                $_SESSION['error_message'] = "Error adding customer: " . $conn->error;
             }
         } elseif ($_POST['action'] === 'delete_customer' && isset($_POST['customer_id'])) {
             $customer_id = $_POST['customer_id'];   
@@ -122,9 +122,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($stmt->execute()) {
                 // Delete the associated image file if it exists
                 if ($row && $row['value'] && !filter_var($row['value'], FILTER_VALIDATE_URL)) {
-                    $image_path = '../assets/img/' . $row['value'];
-                    if (file_exists($image_path)) {
-                        unlink($image_path);
+                    // Check both possible locations
+                    $image_paths = [
+                        '../assets/home/' . $row['value'],
+                        '../assets/img/' . $row['value']
+                    ];
+                    
+                    foreach ($image_paths as $image_path) {
+                        if (file_exists($image_path)) {
+                            unlink($image_path);
+                            break;
+                        }
                     }
                 }
 
@@ -140,9 +148,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $order++;
                 }
 
-                $_SESSION['success_message'] = "Customer section deleted successfully";
+                $_SESSION['success_message'] = "Customer removed from carousel successfully";
             } else {
-                $_SESSION['error_message'] = "Error deleting customer section: " . $conn->error;
+                $_SESSION['error_message'] = "Error deleting customer: " . $conn->error;
+            }
+        } elseif ($_POST['action'] === 'reorder_customers' && isset($_POST['order'])) {
+            // Handle reordering of customers
+            $order_data = json_decode($_POST['order'], true);
+            if (is_array($order_data)) {
+                foreach ($order_data as $index => $customer_id) {
+                    $stmt = $conn->prepare("UPDATE home_sections SET display_order = ? WHERE id = ?");
+                    $display_order = $index + 1;
+                    $stmt->bind_param("ii", $display_order, $customer_id);
+                    $stmt->execute();
+                }
+                $_SESSION['success_message'] = "Customer order updated successfully";
             }
         }
         
@@ -203,7 +223,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     continue;
                 }
                 
-                $upload_dir = '../assets/img/';
+                // Use assets/home/ for customer logos, assets/img/ for others
+                $upload_dir = ($section_name === 'customers') ? '../assets/home/' : '../assets/img/';
                 
                 // Create directory if it doesn't exist
                 if (!file_exists($upload_dir)) {
@@ -244,7 +265,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmt->bind_param("si", $new_filename, $field_id);
                     if ($stmt->execute()) {
                         $success = true;
-                        $message = "Section updated successfully with new image";
+                        $message = "Customer logo updated successfully in carousel";
                         error_log("Image updated in database successfully");
                     } else {
                         $success = false;
@@ -279,8 +300,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Fetch all sections grouped by section name
-$query = "SELECT id, section_name, field_name, field_type, label, value FROM home_sections ORDER BY display_order";
+// Fetch ONLY customers section
+$query = "SELECT id, section_name, field_name, field_type, label, value FROM home_sections WHERE section_name = 'customers' ORDER BY display_order";
 $result = $conn->query($query);
 
 $sections = [];
@@ -307,7 +328,7 @@ if ($result) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Homepage | Admin Panel</title>
+    <title>Manage Customers | Admin Panel</title>
     <link rel="icon" type="image/png" href="/assets/img/tab_icon.png">
     
     <!-- Bootstrap CSS -->
@@ -332,6 +353,9 @@ if ($result) {
       <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
+    <!-- SortableJS for drag-and-drop -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    
     <style>
         textarea.content-editor {
             min-height: 200px;
@@ -340,6 +364,24 @@ if ($result) {
             line-height: 1.5;
             padding: 10px;
         }
+        
+        .sortable-ghost {
+            opacity: 0.4;
+            background: #f0f0f0;
+        }
+        
+        .sortable-drag {
+            opacity: 1;
+        }
+        
+        .customer-item {
+            cursor: move;
+            transition: all 0.3s ease;
+        }
+        
+        .customer-item:hover {
+            background-color: #f8f9fa;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -347,7 +389,7 @@ if ($result) {
     
     <div class="lg:ml-64 p-8">
         <div class="max-w-7xl mx-auto">
-            <h1 class="text-3xl font-bold text-gray-800 mb-8">Manage Homepage Content</h1>
+            <h1 class="text-3xl font-bold text-gray-800 mb-8">Manage Customers Content</h1>
             
             <?php if (isset($_SESSION['success_message'])): ?>
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
@@ -367,23 +409,28 @@ if ($result) {
             </div>
             <?php unset($_SESSION['error_message']); endif; ?>
             
-            <!-- Sections Management -->
-            <div class="space-y-8">                <?php 
+            <!-- Customers Section Only -->
+            <div class="space-y-8">
+                <?php 
                 foreach ($sections as $section_name => $section): 
                     $section_fields = $section['fields'];
                 ?>
                 <div class="bg-white rounded-lg shadow-md p-6">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-4"><?php echo ucwords(str_replace('_', ' ', $section_name)); ?> Section</h2>
-                    <?php if ($section_name === 'customers'): ?>
-                    <div class="mb-4">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Customer Carousel Management</h2>
+                    <div class="mb-4 flex gap-2">
                         <form method="POST" class="inline">
                             <input type="hidden" name="action" value="add_customer">
                             <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
-                                <i class="fas fa-plus mr-2"></i> Add New Customer
+                                <i class="fas fa-plus mr-2"></i> Add New Customer to Carousel
                             </button>
                         </form>
+                        <button type="button" id="saveOrderBtn" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 hidden">
+                            <i class="fas fa-save mr-2"></i> Save Order
+                        </button>
                     </div>
-                    <?php endif; ?>
+                    <p class="text-sm text-gray-600 mb-4">
+                        <i class="fas fa-info-circle mr-1"></i> Drag and drop to reorder customers in the carousel
+                    </p>
                     <form method="POST" enctype="multipart/form-data" class="space-y-4 section-update-form">
                         <input type="hidden" name="section_name" value="<?php echo $section_name; ?>">
                         
@@ -394,7 +441,7 @@ if ($result) {
                             if ($field['type'] === 'image') {
                                 $image_fields[$field_name] = $field;
                             } else {
-                                // Text fields
+                                // Text fields (heading and subheading)
                         ?>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1"><?php echo $field['label']; ?></label>
@@ -411,34 +458,43 @@ if ($result) {
                                 }
                             }
                             
-                            // Now process image fields
+                            // Now process image fields (customer logos)
+                            if (!empty($image_fields)):
+                        ?>
+                        <div id="customersList" class="space-y-4">
+                            <?php
                             $image_counter = 0;
                             foreach ($image_fields as $field_name => $field):
                                 $image_counter++;
-                        ?>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1"><?php echo $field['label']; ?></label>
-                            <?php if ($field['value']): 
-                                $image_path = filter_var($field['value'], FILTER_VALIDATE_URL) ? $field['value'] : '../assets/img/' . $field['value'];
+                                // Extract just the number from the label (remove " Logo" suffix)
+                                $label_text = preg_replace('/\s+logo$/i', '', $field['label']);
                             ?>
-                            <div class="mb-2">
-                                <p class="text-sm text-gray-500 mb-1">Current Image:</p>
-                                <img src="<?php echo $image_path; ?>" alt="Current <?php echo $field['label']; ?>" class="h-32 w-auto border">
+                            <div class="customer-item border rounded-lg p-4" data-customer-id="<?php echo $field['id']; ?>">
+                                <div class="flex items-center gap-3">
+                                    <div class="drag-handle cursor-move text-gray-400 hover:text-gray-600">
+                                        <i class="fas fa-grip-vertical"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1"><?php echo $label_text; ?></label>
+                                        
+                                        <!-- Hidden fields for form submission -->
+                                        <input type="hidden" name="image_fields[image_<?php echo $image_counter; ?>]" value="<?php echo $field_name; ?>">
+                                        <input type="hidden" name="image_fields_id[image_<?php echo $image_counter; ?>]" value="<?php echo $field['id']; ?>">
+                                        
+                                        <!-- File upload input -->
+                                        <input type="file" name="image_<?php echo $image_counter; ?>" accept="image/*" class="mt-1 block w-full">
+                                        <p class="text-sm text-gray-500 mt-1">Recommended size: 400x300 pixels</p>
+                                    </div>
+                                    <div>
+                                        <button type="button" onclick="deleteCustomer(<?php echo $field['id']; ?>)" class="text-red-500 hover:text-red-700 px-3 py-2">
+                                            <i class="fas fa-trash mr-1"></i> Delete
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <?php endif; ?>
-                            <input type="hidden" name="image_fields[image_<?php echo $image_counter; ?>]" value="<?php echo $field_name; ?>">
-                            <input type="hidden" name="image_fields_id[image_<?php echo $image_counter; ?>]" value="<?php echo $field['id']; ?>">
-                            <input type="file" name="image_<?php echo $image_counter; ?>" accept="image/*" class="mt-1 block w-full">
-                            <p class="text-sm text-gray-500 mt-1">Recommended size: 1200x600 pixels</p>
-                            <?php if ($section_name === 'customers'): ?>
-                            <div class="mt-2">
-                                <button type="button" onclick="deleteCustomer(<?php echo $field['id']; ?>)" class="text-red-500 hover:text-red-700">
-                                    <i class="fas fa-trash mr-1"></i> Delete Customer
-                                </button>
-                            </div>
-                            <?php endif; ?>
+                            <?php endforeach; ?>
                         </div>
-                        <?php endforeach; ?>
+                        <?php endif; ?>
                         
                         <div>
                             <button type="submit" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-secondary">Update Section</button>
@@ -456,6 +512,12 @@ if ($result) {
         <input type="hidden" name="customer_id" id="deleteCustomerId">
     </form>
     
+    <!-- Reorder Form (Hidden) -->
+    <form id="reorderForm" method="POST" style="display: none;">
+        <input type="hidden" name="action" value="reorder_customers">
+        <input type="hidden" name="order" id="customerOrder">
+    </form>
+    
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -468,11 +530,35 @@ if ($result) {
                     alert.remove();
                 }, 5000);
             });
+            
+            // Initialize Sortable for customers list
+            const customersList = document.getElementById('customersList');
+            if (customersList) {
+                const sortable = Sortable.create(customersList, {
+                    handle: '.drag-handle',
+                    animation: 150,
+                    ghostClass: 'sortable-ghost',
+                    dragClass: 'sortable-drag',
+                    onEnd: function(evt) {
+                        // Show save button when order changes
+                        document.getElementById('saveOrderBtn').classList.remove('hidden');
+                    }
+                });
+                
+                // Handle save order button
+                document.getElementById('saveOrderBtn').addEventListener('click', function() {
+                    const items = customersList.querySelectorAll('.customer-item');
+                    const order = Array.from(items).map(item => item.dataset.customerId);
+                    
+                    document.getElementById('customerOrder').value = JSON.stringify(order);
+                    document.getElementById('reorderForm').submit();
+                });
+            }
         });
 
         // Function to handle customer deletion
         function deleteCustomer(customerId) {
-            if (confirm('Are you sure you want to delete this customer section?')) {
+            if (confirm('Are you sure you want to delete this customer from the carousel?')) {
                 document.getElementById('deleteCustomerId').value = customerId;
                 document.getElementById('deleteCustomerForm').submit();
             }
