@@ -91,10 +91,10 @@ while ($section = $sections->fetch_assoc()) {
         style="mix-blend-mode: multiply; opacity: 1;">
     
     <div class="hero-content text-center text-white z-10 px-4">
-        <h1 class="text-4xl md:text-5xl font-bold mb-6">
+        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 px-4">
             Innovating Polymer & Rubber Solutions Since 1980
         </h1>
-        <p class="text-xl md:text-2xl mb-8">
+        <p class="text-base sm:text-lg md:text-xl lg:text-2xl mb-8 px-4">
             Driving progress through advanced polymer technologies and sustainable manufacturing practices
         </p>
         <div class="flex flex-wrap justify-center gap-4" data-aos="fade-up" data-aos-delay="400">
@@ -115,13 +115,13 @@ while ($section = $sections->fetch_assoc()) {
             <div class="text-center mb-16">
                 <div class="text-center px-4 sm:px-6 lg:px-8 py-6">
 
-                    <span class="text-accent font-bold text-[40px] sm:text-4xl md:text-5xl lg:text-6xl   leading-tight">
-                        <span class="text-5xl sm:text-5xl md:text-6xl lg:text-7xl">W</span>ho
-                        <span class="text-5xl sm:text-5xl md:text-6xl lg:text-7xl">W</span>e
-                        <span class="text-5xl sm:text-5xl md:text-6xl lg:text-7xl">A</span>re
+                    <span class="text-accent font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight">
+                        <span class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">W</span>ho
+                        <span class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">W</span>e
+                        <span class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">A</span>re
                     </span>
 
-                    <h2 class="section-title font-semibold text-[40px] sm:text-4xl md:text-5xl lg:text-6xl leading-snug">
+                    <h2 class="section-title font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-snug">
                         <?php echo htmlspecialchars($sections_array['company_profile']['title']); ?>
                     </h2>
 
@@ -148,7 +148,7 @@ while ($section = $sections->fetch_assoc()) {
                             <?php echo $sections_array['company_profile']['content']; ?>
                         </div>
                     </div>
-                    <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         <div class="stats-card flex flex-col items-center justify-center">
                             <div class="stats-number">45</div>
                             <div class="stats-label">Years Experience</div>
@@ -171,10 +171,10 @@ while ($section = $sections->fetch_assoc()) {
     <section id="principle" class="section-modern bg-light py-16 px-4 sm:px-6 lg:px-8" data-aos="fade-up">
         <div class="container mx-auto">
             <div class="text-center mb-16">
-                <span class="text-accent font-bold text-[40px] sm:text-4xl md:text-5xl lg:text-6xl">
-                    <span class="text-5xl sm:text-5xl md:text-6xl lg:text-7xl">O</span>ur <span class="text-5xl sm:text-5xl md:text-6xl lg:text-7xl">F</span>oundation
+                <span class="text-accent font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
+                    <span class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">O</span>ur <span class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">F</span>oundation
                 </span>
-                <h2 class="font-semibold text-[40px] sm:text-4xl md:text-5xl lg:text-6xl"><span class="lg:underline lg:underline-offset-[7px] lg:decoration-accent">Co</span>re Principles That Guide Us</h2>
+                <h2 class="font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl"><span class="lg:underline lg:underline-offset-[7px] lg:decoration-accent">Co</span>re Principles That Guide Us</h2>
                 <p class="section-subtitle mt-2 text-base sm:text-lg">The pillars that define our corporate identity and drive our decision-making</p>
             </div>
 
@@ -223,10 +223,10 @@ while ($section = $sections->fetch_assoc()) {
                 <div class="w-full px-4">
                     <div class="text-center mb-16">
                         <span class="text-accent font-bold tracking-widest text-[40px] sm:text-4xl md:text-5xl lg:text-6xl">
-                            <span class="text-5xl sm:text-5xl md:text-6xl lg:text-7xl">O</span>ur
-                            <span class="text-5xl sm:text-5xl md:text-6xl lg:text-7xl">J</span>ourney
+                            <span class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">O</span>ur
+                            <span class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">J</span>ourney
                         </span>
-                        <h2 class="font-semibold text-[40px] sm:text-4xl md:text-5xl lg:text-6xl"><span class="lg:underline lg:underline-offset-[15px] lg:decoration-accent">Mi</span>lestones in Polymer Innovation</h2>
+                        <h2 class="font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl"><span class="lg:underline lg:underline-offset-[15px] lg:decoration-accent">Mi</span>lestones in Polymer Innovation</h2>
                         <p class="section-subtitle">Key moments that shaped our company's growth and success</p>
                     </div>
 
