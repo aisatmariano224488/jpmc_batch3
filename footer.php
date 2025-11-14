@@ -110,8 +110,8 @@
                     </li>
                     <li class="flex items-center justify-start flex-wrap">
                         <i class="fas fa-envelope mr-3"></i>
-                        <a href="mailto:jamespro.asia101@gmail.com" class="hover:text-white transition">
-                            jamespro.asia101@gmail.com
+                        <a href="mailto:jamespolymers.international@gmail.com" class="hover:text-white transition">
+                            jamespolymers.international@gmail.com
                         </a>
                     </li>
                 </ul>
