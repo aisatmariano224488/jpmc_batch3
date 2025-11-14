@@ -507,9 +507,9 @@ $result = $conn->query($sql);
                                     <input type="hidden" name="update_status" value="1">
                                 </form>
                                 
-                                <button class="reply-btn w-full sm:w-auto bg-primary hover:bg-secondary text-white py-2 sm:py-1 px-3 rounded-lg transition text-xs sm:text-sm">
+                                <!-- <button class="reply-btn w-full sm:w-auto bg-primary hover:bg-secondary text-white py-2 sm:py-1 px-3 rounded-lg transition text-xs sm:text-sm">
                                     <i class="fas fa-reply mr-1"></i> Reply
-                                </button>
+                                </button> -->
 
                                 <form method="POST" class="w-full sm:w-auto delete-form">
                                     <input type="hidden" name="inquiry_id" value="<?php echo $row['id']; ?>">
