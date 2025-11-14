@@ -390,17 +390,17 @@ try {
                         <p class="font-bold text-lg mb-1">Connect with Us</p>
                         <p class="text-sm mb-1">Our Social Media Platforms:</p>
                         <div class="flex flex-row items-center gap-4 mt-2 justify-center">
-                            <a href="https://www.linkedin.com" target="_blank" class="flex flex-col items-center text-blue-700 hover:text-blue-500">
+                            <a href="https://www.linkedin.com/in/jgeintl/?fbclid=IwY2xjawODXEpleHRuA2FlbQIxMABicmlkETFya1VwVmhGT29zUmFkZnZac3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHqP7IqkfKh46uOqY24ekHahXg7SO0zpV0JkutQsTED9XVHKy9wGJcybqY0Iu_aem_ssvn9wNzvpSWXPjZTU9o5A" target="_blank" class="flex flex-col items-center text-blue-700 hover:text-blue-500">
                                 <i class="fab fa-linkedin text-3xl"></i>
                                 <span class="text-xs text-black">LinkedIn</span>
                             </a>
 
-                            <a href="https://www.instagram.com" target="_blank" class="flex flex-col items-center text-pink-500 hover:text-pink-400">
+                            <a href="https://www.instagram.com/jgempireintl?igsh=NDNmYnVtMGc1dTM0&fbclid=IwY2xjawODXHtleHRuA2FlbQIxMABicmlkETFya1VwVmhGT29zUmFkZnZac3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHnD5FGlA26b4QLIZaPuhcpFkozPEaQJ74c3ZiA6fc0-SRrAM42J9S3NL-X1q_aem_lPTcoW8mUPJDcsFwAIkQtg" target="_blank" class="flex flex-col items-center text-pink-500 hover:text-pink-400">
                                 <i class="fab fa-instagram text-3xl"></i>
                                 <span class="text-xs text-black">Instagram</span>
                             </a>
 
-                            <a href="https://www.facebook.com" target="_blank" class="flex flex-col items-center text-blue-600 hover:text-blue-500">
+                            <a href="https://www.facebook.com/profile.php?id=61573770164726" target="_blank" class="flex flex-col items-center text-blue-600 hover:text-blue-500">
                                 <i class="fab fa-facebook text-3xl"></i>
                                 <span class="text-xs text-black">Facebook</span>
                             </a>
